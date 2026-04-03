@@ -224,12 +224,12 @@
   <a href="#" class="nav-logo">B<span>.</span>ALMEIDA</a>
   <div class="nav-right">
     <ul class="nav-links">
-      <li><a href="#sobre" data-pt>Sobre</a><a href="#sobre" data-en style="display:none">About</a></li>
-      <li><a href="#trabalho" data-pt>Trabalho</a><a href="#trabalho" data-en style="display:none">Work</a></li>
-      <li><a href="#metodologia" data-pt>Metodologia</a><a href="#metodologia" data-en style="display:none">Method</a></li>
-      <li><a href="#objetivos" data-pt>Objetivos</a><a href="#objetivos" data-en style="display:none">Goals</a></li>
-      <li><a href="#contacto" data-pt>Contacto</a><a href="#contacto" data-en style="display:none">Contact</a></li>
-      <li><a href="analises.html" class="nav-analises" data-pt>Análises</a><a href="analises.html" class="nav-analises" data-en style="display:none">Analysis</a></li>
+      <li><a href="#sobre" data-nav="Sobre|About">Sobre</a></li>
+      <li><a href="#trabalho" data-nav="Trabalho|Work">Trabalho</a></li>
+      <li><a href="#metodologia" data-nav="Metodologia|Method">Metodologia</a></li>
+      <li><a href="#objetivos" data-nav="Objetivos|Goals">Objetivos</a></li>
+      <li><a href="#contacto" data-nav="Contacto|Contact">Contacto</a></li>
+      <li><a href="analises.html" class="nav-analises" data-nav="Análises|Analysis">Análises</a></li>
     </ul>
     <button class="lang-btn" onclick="toggleLang()" id="lang-toggle">🇬🇧 EN</button>
   </div>
@@ -788,6 +788,10 @@
     document.body.classList.toggle('lang-en', isEn);
     const btns = document.querySelectorAll('#lang-toggle, .mobile-lang .lang-btn');
     btns.forEach(btn => btn.textContent = isEn ? '🇵🇹 PT' : '🇬🇧 EN');
+    document.querySelectorAll('[data-nav]').forEach(el => {
+      const parts = el.getAttribute('data-nav').split('|');
+      el.textContent = isEn ? parts[1] : parts[0];
+    });
   }
 
   function toggleMenu() {
