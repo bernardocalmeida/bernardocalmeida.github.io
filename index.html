@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt" id="html-root">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,341 +7,122 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0d0d0d;
-    --surface: #161616;
-    --surface2: #1e1e1e;
-    --red: #c0392b;
-    --red-light: #e74c3c;
-    --red-dim: rgba(192,57,43,0.15);
-    --white: #f0ede8;
-    --muted: #7a7670;
-    --border: rgba(240,237,232,0.08);
-    --border-red: rgba(192,57,43,0.3);
+    --bg: #0d0d0d; --surface: #161616; --surface2: #1e1e1e;
+    --red: #c0392b; --red-light: #e74c3c; --red-dim: rgba(192,57,43,0.15);
+    --white: #f0ede8; --muted: #7a7670;
+    --border: rgba(240,237,232,0.08); --border-red: rgba(192,57,43,0.3);
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
+  body { background: var(--bg); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
 
   /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.25rem 3rem;
-    background: rgba(13,13,13,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem; letter-spacing: 0.1em;
-    color: var(--white); text-decoration: none;
-  }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 3rem; background: rgba(13,13,13,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.1em; color: var(--white); text-decoration: none; }
   .nav-logo span { color: var(--red); }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  .nav-links a {
-    color: var(--muted); text-decoration: none;
-    font-size: 0.8rem; letter-spacing: 0.12em;
-    text-transform: uppercase; transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--white); }
+  .nav-right { display: flex; align-items: center; gap: 2rem; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--white); }
+  .nav-links a.nav-analises { color: var(--red); }
+  .nav-links a.nav-analises:hover { color: var(--red-light); }
+  .lang-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; padding: 0.35rem 0.75rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.4rem; }
+  .lang-btn:hover { border-color: var(--border-red); color: var(--white); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--white); transition: all 0.3s; }
+  .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(13,13,13,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: var(--white); text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 0.1em; transition: color 0.2s; }
+  .mobile-menu a:hover { color: var(--red); }
+  .mobile-menu .mobile-lang { margin-top: 1rem; }
 
   /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: grid; grid-template-columns: 1fr 1fr;
-    align-items: end;
-    padding: 0 0 5rem;
-    position: relative; overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 60% 50% at 80% 50%, rgba(192,57,43,0.06) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(192,57,43,0.04) 0%, transparent 60%);
-  }
-  .hero-grid-lines {
-    position: absolute; inset: 0; opacity: 0.03;
-    background-image:
-      linear-gradient(var(--white) 1px, transparent 1px),
-      linear-gradient(90deg, var(--white) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-  .hero-left {
-    padding: 0 3rem 0 3rem;
-    position: relative; z-index: 2;
-    display: flex; flex-direction: column; justify-content: flex-end;
-  }
-  .hero-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem; letter-spacing: 0.25em;
-    color: var(--red); text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    display: flex; align-items: center; gap: 1rem;
-  }
-  .hero-eyebrow::before {
-    content: ''; display: inline-block;
-    width: 2rem; height: 1px; background: var(--red);
-  }
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(4rem, 10vw, 8.5rem);
-    line-height: 0.9; letter-spacing: -0.01em;
-    color: var(--white); margin-bottom: 1.5rem;
-  }
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: end; padding: 0 0 5rem; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 80% 50%, rgba(192,57,43,0.06) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 10% 80%, rgba(192,57,43,0.04) 0%, transparent 60%); }
+  .hero-grid-lines { position: absolute; inset: 0; opacity: 0.03; background-image: linear-gradient(var(--white) 1px, transparent 1px), linear-gradient(90deg, var(--white) 1px, transparent 1px); background-size: 60px 60px; }
+  .hero-left { padding: 0 3rem 0 3rem; position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; }
+  .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.25em; color: var(--red); text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+  .hero-eyebrow::before { content: ''; display: inline-block; width: 2rem; height: 1px; background: var(--red); }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem, 10vw, 8.5rem); line-height: 0.9; letter-spacing: -0.01em; color: var(--white); margin-bottom: 1.5rem; }
   .hero-title .line-red { color: var(--red); }
-  .hero-sub {
-    max-width: 480px; font-size: 1rem;
-    color: var(--muted); line-height: 1.8;
-    border-left: 1px solid var(--border-red);
-    padding-left: 1.5rem; margin-bottom: 3rem;
-  }
-  .hero-stats {
-    display: flex; gap: 3rem;
-    border-top: 1px solid var(--border);
-    padding-top: 2rem;
-  }
+  .hero-sub { max-width: 480px; font-size: 1rem; color: var(--muted); line-height: 1.8; border-left: 1px solid var(--border-red); padding-left: 1.5rem; margin-bottom: 3rem; }
+  .hero-stats { display: flex; gap: 2rem; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: 2rem; }
   .stat-item { display: flex; flex-direction: column; gap: 0.25rem; }
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.5rem; color: var(--white); line-height: 1;
-  }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--white); line-height: 1; }
   .stat-num span { color: var(--red); }
-  .stat-label {
-    font-size: 0.7rem; color: var(--muted);
-    letter-spacing: 0.15em; text-transform: uppercase;
-  }
-
-  /* HERO PHOTO */
-  .hero-right {
-    position: relative; z-index: 2;
-    height: 100vh;
-    display: flex; align-items: flex-end; justify-content: center;
-    overflow: hidden;
-  }
-  .hero-photo-wrap {
-    width: 100%; height: 100%;
-    position: relative;
-    display: flex; align-items: flex-end;
-  }
-  .hero-photo-wrap img {
-    width: 100%; height: 100%;
-    object-fit: cover; object-position: center top;
-    display: block; filter: blur(3px); transform: scale(1.03);
-  }
-  .hero-photo-gradient {
-    position: absolute; inset: 0;
-    background: linear-gradient(
-      to right, var(--bg) 0%, transparent 30%,
-      transparent 70%, rgba(13,13,13,0.4) 100%
-    ),
-    linear-gradient(
-      to bottom, rgba(13,13,13,0.6) 0%, transparent 20%,
-      transparent 60%, var(--bg) 100%
-    );
-  }
-
-  .scroll-hint {
-    position: absolute; right: 3rem; bottom: 4rem;
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-    font-family: 'DM Mono', monospace; font-size: 0.62rem;
-    color: var(--muted); letter-spacing: 0.2em;
-    text-transform: uppercase; writing-mode: vertical-rl; z-index: 3;
-  }
-  .scroll-hint::after {
-    content: ''; display: block;
-    width: 1px; height: 3rem; background: var(--border-red);
-  }
+  .stat-label { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }
+  .hero-right { position: relative; z-index: 2; height: 100vh; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+  .hero-photo-wrap { width: 100%; height: 100%; position: relative; display: flex; align-items: flex-end; }
+  .hero-photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; filter: blur(3px); transform: scale(1.03); }
+  .hero-photo-gradient { position: absolute; inset: 0; background: linear-gradient(to right, var(--bg) 0%, transparent 30%, transparent 70%, rgba(13,13,13,0.4) 100%), linear-gradient(to bottom, rgba(13,13,13,0.6) 0%, transparent 20%, transparent 60%, var(--bg) 100%); }
+  .scroll-hint { position: absolute; right: 3rem; bottom: 4rem; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase; writing-mode: vertical-rl; z-index: 3; }
+  .scroll-hint::after { content: ''; display: block; width: 1px; height: 3rem; background: var(--border-red); }
 
   /* SECTIONS */
   section { padding: 6rem 3rem; }
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem; letter-spacing: 0.25em;
-    color: var(--red); text-transform: uppercase;
-    margin-bottom: 1rem;
-    display: flex; align-items: center; gap: 0.75rem;
-  }
-  .section-label::before {
-    content: ''; display: inline-block;
-    width: 1.5rem; height: 1px; background: var(--red);
-  }
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1; margin-bottom: 3rem; color: var(--white);
-  }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.25em; color: var(--red); text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+  .section-label::before { content: ''; display: inline-block; width: 1.5rem; height: 1px; background: var(--red); }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1; margin-bottom: 3rem; color: var(--white); }
 
   /* ABOUT */
-  .about-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 5rem; align-items: start;
-  }
-  .about-text p {
-    font-size: 1.05rem; color: rgba(240,237,232,0.75);
-    margin-bottom: 1.5rem; line-height: 1.9;
-  }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .about-text p { font-size: 1.05rem; color: rgba(240,237,232,0.75); margin-bottom: 1.5rem; line-height: 1.9; }
   .about-text p strong { color: var(--white); font-weight: 500; }
-
   .about-credentials { display: flex; flex-direction: column; gap: 1rem; }
-  .credential-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-left: 2px solid var(--red); padding: 1.25rem 1.5rem;
-    transition: background 0.2s;
-  }
+  .credential-card { background: var(--surface); border: 1px solid var(--border); border-left: 2px solid var(--red); padding: 1.25rem 1.5rem; transition: background 0.2s; }
   .credential-card:hover { background: var(--surface2); }
   .credential-title { font-size: 0.9rem; font-weight: 500; color: var(--white); margin-bottom: 0.25rem; }
   .credential-sub { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.05em; }
-  .credential-year {
-    font-family: 'DM Mono', monospace; font-size: 0.68rem;
-    color: var(--red); margin-top: 0.5rem;
-  }
+  .credential-year { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--red); margin-top: 0.5rem; }
 
   /* APPROACH */
   .approach-section { background: var(--surface); }
-  .approach-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1px; background: var(--border); border: 1px solid var(--border);
-  }
-  .approach-item {
-    background: var(--bg); padding: 2.5rem 2rem; transition: background 0.2s;
-  }
+  .approach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .approach-item { background: var(--bg); padding: 2.5rem 2rem; transition: background 0.2s; }
   .approach-item:hover { background: var(--surface2); }
-  .approach-num {
-    font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem;
-    color: var(--red-dim); line-height: 1; margin-bottom: 1rem;
-    border-bottom: 1px solid var(--border-red); padding-bottom: 1rem;
-  }
-  .approach-name {
-    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--white); margin-bottom: 0.75rem;
-  }
+  .approach-num { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: var(--red-dim); line-height: 1; margin-bottom: 1rem; border-bottom: 1px solid var(--border-red); padding-bottom: 1rem; }
+  .approach-name { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); margin-bottom: 0.75rem; }
   .approach-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
 
   /* STATS BAR */
-  .stats-bar {
-    background: var(--red);
-    padding: 2.5rem 3rem;
-    display: grid; grid-template-columns: repeat(7, 1fr);
-    gap: 0; border-top: 1px solid rgba(255,255,255,0.1);
-  }
-  .stats-bar-item {
-    display: flex; flex-direction: column; align-items: center;
-    gap: 0.3rem; padding: 0 1rem;
-    border-right: 1px solid rgba(255,255,255,0.15);
-  }
+  .stats-bar { background: var(--red); padding: 2.5rem 3rem; display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; border-top: 1px solid rgba(255,255,255,0.1); }
+  .stats-bar-item { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; padding: 0 1rem; border-right: 1px solid rgba(255,255,255,0.15); }
   .stats-bar-item:last-child { border-right: none; }
-  .stats-bar-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem; color: white; line-height: 1;
-  }
-  .stats-bar-label {
-    font-size: 0.65rem; color: rgba(255,255,255,0.65);
-    letter-spacing: 0.12em; text-transform: uppercase; text-align: center;
-  }
-  .stats-bar-pos {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3.5rem; color: white; line-height: 1;
-  }
-  .stats-bar-pos-label {
-    font-size: 0.65rem; color: rgba(255,255,255,0.65);
-    letter-spacing: 0.12em; text-transform: uppercase;
-  }
+  .stats-bar-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: white; line-height: 1; }
+  .stats-bar-label { font-size: 0.65rem; color: rgba(255,255,255,0.65); letter-spacing: 0.12em; text-transform: uppercase; text-align: center; }
+  .stats-bar-pos { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: white; line-height: 1; }
+  .stats-bar-pos-label { font-size: 0.65rem; color: rgba(255,255,255,0.65); letter-spacing: 0.12em; text-transform: uppercase; }
 
   /* WORK */
-  .work-intro {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
-    margin-bottom: 4rem; align-items: end;
-  }
+  .work-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-bottom: 4rem; align-items: end; }
   .work-intro p { font-size: 1rem; color: rgba(240,237,232,0.7); line-height: 1.9; }
-  .work-intro .club-badge {
-    display: flex; align-items: center; gap: 1rem;
-    background: var(--surface); border: 1px solid var(--border);
-    padding: 1.25rem 1.5rem; margin-bottom: 1rem;
-  }
-  .badge-icon {
-    width: 3rem; height: 3rem; border-radius: 50%;
-    background: var(--red-dim); border: 1px solid var(--border-red);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem;
-    color: var(--red); flex-shrink: 0;
-  }
+  .work-intro .club-badge { display: flex; align-items: center; gap: 1rem; background: var(--surface); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .badge-icon { width: 3rem; height: 3rem; border-radius: 50%; background: var(--red-dim); border: 1px solid var(--border-red); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; color: var(--red); flex-shrink: 0; }
   .badge-info { flex: 1; }
   .badge-name { font-size: 0.9rem; font-weight: 500; color: var(--white); }
   .badge-sub { font-size: 0.75rem; color: var(--muted); }
-
-  .reports-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-    background: var(--border); border: 1px solid var(--border); margin-bottom: 3rem;
-  }
-  .report-card {
-    background: var(--bg); padding: 0; overflow: hidden; cursor: default;
-    transition: background 0.2s; position: relative;
-  }
+  .reports-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 3rem; }
+  .report-card { background: var(--bg); padding: 0; overflow: hidden; cursor: default; transition: background 0.2s; }
   .report-card:hover { background: var(--surface); }
-  .report-card-header {
-    padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .report-type {
-    font-family: 'DM Mono', monospace; font-size: 0.62rem;
-    color: var(--red); letter-spacing: 0.2em; text-transform: uppercase;
-  }
-  .report-jornada {
-    font-family: 'DM Mono', monospace; font-size: 0.62rem;
-    color: var(--muted); letter-spacing: 0.1em;
-  }
-  .report-team {
-    padding: 1.25rem 1.5rem 0.75rem;
-    font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem;
-    color: var(--white); letter-spacing: 0.02em;
-  }
-  .report-meta {
-    padding: 0 1.5rem 1.25rem;
-    display: flex; gap: 1rem; flex-wrap: wrap;
-  }
-  .report-tag {
-    font-size: 0.68rem; color: var(--muted);
-    border: 1px solid var(--border); padding: 0.2rem 0.6rem;
-    letter-spacing: 0.08em; text-transform: uppercase;
-  }
-  .report-detail-grid {
-    padding: 1rem 1.5rem; border-top: 1px solid var(--border);
-    display: flex; flex-direction: column; gap: 0.5rem;
-  }
-  .report-detail-row {
-    display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.8rem;
-  }
-  .detail-label {
-    color: var(--muted); min-width: 5.5rem; font-size: 0.72rem;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    padding-top: 0.1rem; flex-shrink: 0;
-  }
+  .report-card-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+  .report-type { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--red); letter-spacing: 0.2em; text-transform: uppercase; }
+  .report-jornada { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.1em; }
+  .report-team { padding: 1.25rem 1.5rem 0.75rem; font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: var(--white); letter-spacing: 0.02em; }
+  .report-meta { padding: 0 1.5rem 1.25rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .report-tag { font-size: 0.68rem; color: var(--muted); border: 1px solid var(--border); padding: 0.2rem 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .report-detail-grid { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.5rem; }
+  .report-detail-row { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.8rem; }
+  .detail-label { color: var(--muted); min-width: 7rem; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; padding-top: 0.1rem; flex-shrink: 0; }
   .detail-val { color: rgba(240,237,232,0.8); line-height: 1.5; }
 
   /* FORMATION */
-  .formation-showcase {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem;
-  }
+  .formation-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
   .formation-card { background: var(--surface); border: 1px solid var(--border); overflow: hidden; }
-  .formation-card-header {
-    padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center;
-  }
+  .formation-card-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
   .formation-club { font-size: 0.85rem; font-weight: 500; color: var(--white); }
-  .formation-scheme { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--red); line-height: 1; }
+  .formation-scheme { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--red); line-height: 1; flex-shrink: 0; }
   .formation-notes { padding: 1.25rem 1.5rem; }
-  .formation-note {
-    font-size: 0.8rem; color: var(--muted); line-height: 1.7;
-    padding: 0.5rem 0; border-bottom: 1px solid var(--border);
-  }
+  .formation-note { font-size: 0.8rem; color: var(--muted); line-height: 1.7; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
   .formation-note:last-child { border-bottom: none; }
   .formation-note strong { color: var(--white); font-weight: 500; }
 
@@ -349,47 +130,22 @@
   .bp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
   .bp-intro p { font-size: 0.95rem; color: rgba(240,237,232,0.7); line-height: 1.9; margin-bottom: 1.25rem; }
   .bp-types { display: flex; flex-direction: column; gap: 0.75rem; }
-  .bp-type-row {
-    display: flex; align-items: center; justify-content: space-between;
-    background: var(--surface); border: 1px solid var(--border);
-    padding: 0.9rem 1.25rem; border-left: 2px solid var(--red);
-  }
+  .bp-type-row { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--border); padding: 0.9rem 1.25rem; border-left: 2px solid var(--red); }
   .bp-type-name { font-size: 0.85rem; font-weight: 500; color: var(--white); }
   .bp-type-count { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--red); line-height: 1; }
 
-  .bp-diagram { background: var(--surface); border: 1px solid var(--border); padding: 2rem; }
-  .bp-diagram-title {
-    font-family: 'DM Mono', monospace; font-size: 0.68rem;
-    color: var(--red); letter-spacing: 0.2em; text-transform: uppercase;
-    margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);
-  }
-  .field-svg { width: 100%; }
-
   /* METHODOLOGY */
   .methodology-section { background: var(--surface); }
-  .method-steps {
-    display: grid; grid-template-columns: repeat(6, 1fr);
-    gap: 0; border: 1px solid var(--border); background: var(--border); margin-top: 3rem;
-  }
+  .method-steps { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; border: 1px solid var(--border); background: var(--border); margin-top: 3rem; }
   .method-step { background: var(--bg); padding: 1.75rem 1.25rem; position: relative; }
-  .method-step::after {
-    content: '→'; position: absolute; right: -0.6rem; top: 50%;
-    transform: translateY(-50%); color: var(--red); font-size: 0.9rem;
-    z-index: 1; background: var(--bg); padding: 0.1rem;
-  }
+  .method-step::after { content: '→'; position: absolute; right: -0.6rem; top: 50%; transform: translateY(-50%); color: var(--red); font-size: 0.9rem; z-index: 1; background: var(--bg); padding: 0.1rem; }
   .method-step:last-child::after { display: none; }
-  .method-step-num {
-    font-family: 'DM Mono', monospace; font-size: 0.62rem;
-    color: var(--red); letter-spacing: 0.15em; margin-bottom: 0.75rem;
-  }
+  .method-step-num { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--red); letter-spacing: 0.15em; margin-bottom: 0.75rem; }
   .method-step-title { font-size: 0.8rem; font-weight: 500; color: var(--white); margin-bottom: 0.5rem; line-height: 1.3; }
   .method-step-desc { font-size: 0.72rem; color: var(--muted); line-height: 1.6; }
 
   /* OBJECTIVES */
-  .objectives-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-    background: var(--border); border: 1px solid var(--border);
-  }
+  .objectives-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
   .objective-item { background: var(--bg); padding: 2.5rem 2rem; transition: background 0.2s; }
   .objective-item:hover { background: var(--surface); }
   .objective-icon { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--red-dim); margin-bottom: 1rem; line-height: 1; }
@@ -397,48 +153,68 @@
   .objective-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.8; }
 
   /* CONTACT */
-  .contact-section {
-    background: var(--red); padding: 5rem 3rem;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
-  }
+  .contact-section { background: var(--red); padding: 5rem 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
   .contact-section .section-label { color: rgba(255,255,255,0.6); }
   .contact-section .section-label::before { background: rgba(255,255,255,0.6); }
   .contact-section .section-title { color: white; margin-bottom: 1rem; }
   .contact-text { font-size: 1rem; color: rgba(255,255,255,0.75); line-height: 1.8; }
   .contact-links { display: flex; flex-direction: column; gap: 1rem; }
-  .contact-link {
-    display: flex; align-items: center; justify-content: space-between;
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-    padding: 1.25rem 1.5rem; text-decoration: none; color: white; transition: background 0.2s;
-  }
+  .contact-link { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 1.25rem 1.5rem; text-decoration: none; color: white; transition: background 0.2s; }
   .contact-link:hover { background: rgba(255,255,255,0.2); }
   .contact-link-label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7; }
   .contact-link-value { font-size: 0.9rem; font-weight: 500; }
   .contact-link-arrow { opacity: 0.5; font-size: 1rem; }
 
-  footer {
-    padding: 2rem 3rem; border-top: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-  }
+  footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
   .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.1em; color: var(--muted); }
   .footer-copy { font-size: 0.72rem; color: var(--muted); }
   .section-divider { height: 1px; background: var(--border); margin: 0 3rem; }
 
-  @media (max-width: 900px) {
+  /* LANGUAGE HIDDEN */
+  [data-en] { display: none; }
+  .lang-en [data-pt] { display: none; }
+  .lang-en [data-en] { display: block; }
+  .lang-en span[data-en] { display: inline; }
+  .lang-en span[data-pt] { display: none; }
+
+  /* =================== MOBILE =================== */
+  @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
-    .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; min-height: auto; }
-    .hero-right { height: 60vw; }
-    .hero-left { padding: 8rem 1.5rem 3rem; }
-    section { padding: 4rem 1.5rem; }
-    .about-grid, .work-intro, .bp-grid,
-    .formation-showcase, .objectives-grid,
-    .contact-section { grid-template-columns: 1fr; gap: 2.5rem; }
-    .reports-grid, .approach-grid { grid-template-columns: 1fr; }
+    .nav-right { display: none; }
+    .hamburger { display: flex; }
+
+    .hero { grid-template-columns: 1fr; min-height: 100vh; padding: 0; }
+    .hero-right { position: absolute; inset: 0; height: 100%; opacity: 0.35; z-index: 0; }
+    .hero-left { padding: 7rem 1.5rem 3rem; position: relative; z-index: 2; justify-content: flex-end; min-height: 100vh; }
+    .hero-title { font-size: clamp(3.5rem, 18vw, 6rem); }
+    .hero-sub { max-width: 100%; font-size: 0.9rem; }
+    .hero-stats { gap: 1.2rem; }
+    .stat-num { font-size: 2rem; }
+    .scroll-hint { display: none; }
+
+    .stats-bar { grid-template-columns: repeat(4, 1fr); padding: 1.5rem 1rem; }
+    .stats-bar-item { padding: 0 0.5rem; }
+    .stats-bar-pos { font-size: 2.5rem; }
+
+    section { padding: 3rem 1.5rem; }
+    .section-divider { margin: 0 1.5rem; }
+
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .approach-grid { grid-template-columns: 1fr; }
+    .approach-item { padding: 1.75rem 1.5rem; }
     .method-steps { grid-template-columns: 1fr 1fr; }
-    .stats-bar { grid-template-columns: repeat(4, 1fr); gap: 0; }
-    .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
-    footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    .method-step::after { display: none; }
+
+    .work-intro { grid-template-columns: 1fr; gap: 2rem; }
+    .reports-grid { grid-template-columns: 1fr; }
+    .detail-label { min-width: 6rem; font-size: 0.68rem; }
+
+    .formation-showcase { grid-template-columns: 1fr; gap: 1.5rem; }
+    .bp-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+    .objectives-grid { grid-template-columns: 1fr; }
+    .contact-section { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 2rem 1.5rem; }
   }
 </style>
 </head>
@@ -446,123 +222,109 @@
 
 <nav>
   <a href="#" class="nav-logo">B<span>.</span>ALMEIDA</a>
-  <ul class="nav-links">
-    <li><a href="#sobre">Sobre</a></li>
-    <li><a href="#trabalho">Trabalho</a></li>
-    <li><a href="#metodologia">Metodologia</a></li>
-    <li><a href="#objetivos">Objetivos</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-  </ul>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#sobre" data-pt>Sobre</a><a href="#sobre" data-en style="display:none">About</a></li>
+      <li><a href="#trabalho" data-pt>Trabalho</a><a href="#trabalho" data-en style="display:none">Work</a></li>
+      <li><a href="#metodologia" data-pt>Metodologia</a><a href="#metodologia" data-en style="display:none">Method</a></li>
+      <li><a href="#objetivos" data-pt>Objetivos</a><a href="#objetivos" data-en style="display:none">Goals</a></li>
+      <li><a href="#contacto" data-pt>Contacto</a><a href="#contacto" data-en style="display:none">Contact</a></li>
+      <li><a href="analises.html" class="nav-analises" data-pt>Análises</a><a href="analises.html" class="nav-analises" data-en style="display:none">Analysis</a></li>
+    </ul>
+    <button class="lang-btn" onclick="toggleLang()" id="lang-toggle">🇬🇧 EN</button>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
 </nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#sobre" onclick="toggleMenu()" data-pt>Sobre</a>
+  <a href="#sobre" onclick="toggleMenu()" data-en>About</a>
+  <a href="#trabalho" onclick="toggleMenu()" data-pt>Trabalho</a>
+  <a href="#trabalho" onclick="toggleMenu()" data-en>Work</a>
+  <a href="#metodologia" onclick="toggleMenu()" data-pt>Metodologia</a>
+  <a href="#metodologia" onclick="toggleMenu()" data-en>Method</a>
+  <a href="#objetivos" onclick="toggleMenu()" data-pt>Objetivos</a>
+  <a href="#objetivos" onclick="toggleMenu()" data-en>Goals</a>
+  <a href="analises.html" style="color:var(--red)" data-pt>Análises</a>
+  <a href="analises.html" style="color:var(--red)" data-en>Analysis</a>
+  <a href="#contacto" onclick="toggleMenu()" data-pt>Contacto</a>
+  <a href="#contacto" onclick="toggleMenu()" data-en>Contact</a>
+  <div class="mobile-lang">
+    <button class="lang-btn" onclick="toggleLang()">🇬🇧 EN</button>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="inicio">
   <div class="hero-bg"></div>
   <div class="hero-grid-lines"></div>
-
   <div class="hero-left">
-    <div class="hero-eyebrow">Scouting & Análise Tática de Jogo</div>
-    <h1 class="hero-title">
-      BERNARDO<br>
-      <span class="line-red">ALMEIDA</span>
-    </h1>
+    <div class="hero-eyebrow">
+      <span data-pt>Scouting & Análise Tática de Jogo</span>
+      <span data-en>Scouting & Tactical Match Analysis</span>
+    </div>
+    <h1 class="hero-title">BERNARDO<br><span class="line-red">ALMEIDA</span></h1>
     <p class="hero-sub">
-      Economista de formação, analista de jogo por vocação. Estou no CR Antes desde o início da época 2025/2026 — o meu primeiro projeto real no futebol, onde construí de raiz toda a estrutura de análise tática da equipa. Agora a dar o próximo passo com o curso da Liga Portugal Business School.
+      <span data-pt>Economista de formação, analista de jogo por vocação. Estou no CR Antes desde o início da época 2025/2026 — o meu primeiro projeto real no futebol, onde construí de raiz toda a estrutura de análise tática da equipa. Agora a dar o próximo passo com o curso da Liga Portugal Business School.</span>
+      <span data-en>Economist by training, football analyst by vocation. I joined CR Antes at the start of the 2025/2026 season — my first real football project, where I built the entire tactical analysis structure from scratch. Now taking the next step with the Liga Portugal Business School course.</span>
     </p>
     <div class="hero-stats">
       <div class="stat-item">
         <div class="stat-num">13<span>+</span></div>
-        <div class="stat-label">Adversários analisados</div>
+        <div class="stat-label" data-pt>Adversários analisados</div>
+        <div class="stat-label" data-en>Opponents analysed</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">2<span>ª</span></div>
-        <div class="stat-label">Volta com updates</div>
+        <div class="stat-label" data-pt>Volta com updates</div>
+        <div class="stat-label" data-en>2nd leg updates</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">7<span>º</span></div>
-        <div class="stat-label">Classificação atual</div>
+        <div class="stat-label" data-pt>Classificação atual</div>
+        <div class="stat-label" data-en>Current standing</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">34</div>
-        <div class="stat-label">Pontos · 22 jogos</div>
+        <div class="stat-label" data-pt>Pontos · 22 jogos</div>
+        <div class="stat-label" data-en>Points · 22 games</div>
       </div>
     </div>
   </div>
-
   <div class="hero-right">
     <div class="hero-photo-wrap">
       <img src="https://i.imgur.com/wr7V4Py.jpeg" alt="Bernardo Almeida" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #1a0a08 0%, #2d1410 50%, #0d0d0d 100%)'">
       <div class="hero-photo-gradient"></div>
     </div>
   </div>
-
   <div class="scroll-hint">Scroll</div>
 </section>
 
 <!-- STATS BAR -->
 <div class="stats-bar">
-  <div class="stats-bar-item">
-    <div class="stats-bar-pos">7º</div>
-    <div class="stats-bar-pos-label">Classificação · Zona Sul</div>
-  </div>
-  <div class="stats-bar-item">
-    <div class="stats-bar-num">22</div>
-    <div class="stats-bar-label">Jogos</div>
-  </div>
-  <div class="stats-bar-item">
-    <div class="stats-bar-num">10</div>
-    <div class="stats-bar-label">Vitórias</div>
-  </div>
-  <div class="stats-bar-item">
-    <div class="stats-bar-num">4</div>
-    <div class="stats-bar-label">Empates</div>
-  </div>
-  <div class="stats-bar-item">
-    <div class="stats-bar-num">8</div>
-    <div class="stats-bar-label">Derrotas</div>
-  </div>
-  <div class="stats-bar-item">
-    <div class="stats-bar-num">47–45</div>
-    <div class="stats-bar-label">Golos marcados/sofridos</div>
-  </div>
-  <div class="stats-bar-item">
-    <div class="stats-bar-num">34</div>
-    <div class="stats-bar-label">Pontos · AFA Aveiro 25/26</div>
-  </div>
+  <div class="stats-bar-item"><div class="stats-bar-pos">7º</div><div class="stats-bar-pos-label" data-pt>Classificação · Zona Sul</div><div class="stats-bar-pos-label" data-en>Standing · South Zone</div></div>
+  <div class="stats-bar-item"><div class="stats-bar-num">22</div><div class="stats-bar-label" data-pt>Jogos</div><div class="stats-bar-label" data-en>Games</div></div>
+  <div class="stats-bar-item"><div class="stats-bar-num">10</div><div class="stats-bar-label" data-pt>Vitórias</div><div class="stats-bar-label" data-en>Wins</div></div>
+  <div class="stats-bar-item"><div class="stats-bar-num">4</div><div class="stats-bar-label" data-pt>Empates</div><div class="stats-bar-label" data-en>Draws</div></div>
+  <div class="stats-bar-item"><div class="stats-bar-num">8</div><div class="stats-bar-label" data-pt>Derrotas</div><div class="stats-bar-label" data-en>Losses</div></div>
+  <div class="stats-bar-item"><div class="stats-bar-num">47–45</div><div class="stats-bar-label" data-pt>Golos M/S</div><div class="stats-bar-label" data-en>Goals F/A</div></div>
+  <div class="stats-bar-item"><div class="stats-bar-num">34</div><div class="stats-bar-label" data-pt>Pontos · AFA Aveiro 25/26</div><div class="stats-bar-label" data-en>Points · AFA Aveiro 25/26</div></div>
 </div>
 
 <!-- RESULTS BAR -->
 <div style="background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.5rem 3rem; display: flex; align-items: center; gap: 0; overflow-x: auto;">
-  <div style="font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--red); letter-spacing: 0.2em; text-transform: uppercase; margin-right: 2.5rem; white-space: nowrap; flex-shrink: 0;">Resultados em destaque</div>
+  <div style="font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--red); letter-spacing: 0.2em; text-transform: uppercase; margin-right: 2.5rem; white-space: nowrap; flex-shrink: 0;" data-pt>Resultados em destaque</div>
+  <div style="font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--red); letter-spacing: 0.2em; text-transform: uppercase; margin-right: 2.5rem; white-space: nowrap; flex-shrink: 0;" data-en>Highlighted results</div>
   <div style="display: flex; gap: 1px; background: var(--border); border: 1px solid var(--border); flex-shrink: 0;">
-    <div style="background: var(--bg); padding: 0.9rem 1.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 160px;">
-      <div style="font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase;">J2 · Out 2025</div>
-      <div style="font-size: 0.85rem; font-weight: 500; color: var(--white);">Bustelo <span style="color: var(--red); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin: 0 0.4rem;">1–3</span> CR Antes</div>
-    </div>
-    <div style="background: var(--bg); padding: 0.9rem 1.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 160px;">
-      <div style="font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase;">J7 · Nov 2025</div>
-      <div style="font-size: 0.85rem; font-weight: 500; color: var(--white);">Mourisquense <span style="color: var(--red); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin: 0 0.4rem;">0–2</span> CR Antes</div>
-    </div>
-    <div style="background: var(--bg); padding: 0.9rem 1.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 160px;">
-      <div style="font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase;">J8 · Nov 2025</div>
-      <div style="font-size: 0.85rem; font-weight: 500; color: var(--white);">CR Antes <span style="color: var(--red); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin: 0 0.4rem;">4–1</span> Valecambrense</div>
-    </div>
-    <div style="background: var(--bg); padding: 0.9rem 1.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 160px;">
-      <div style="font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase;">J10 · Dez 2025</div>
-      <div style="font-size: 0.85rem; font-weight: 500; color: var(--white);">CR Antes <span style="color: var(--muted); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin: 0 0.4rem;">3–3</span> Valonguense</div>
-    </div>
-    <div style="background: var(--bg); padding: 0.9rem 1.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 160px;">
-      <div style="font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase;">J11 · Jan 2026</div>
-      <div style="font-size: 0.85rem; font-weight: 500; color: var(--white);">Beira-Mar B <span style="color: var(--muted); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin: 0 0.4rem;">2–1</span> CR Antes</div>
-    </div>
-    <div style="background: var(--bg); padding: 0.9rem 1.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 160px;">
-      <div style="font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase;">J12 · Jan 2026</div>
-      <div style="font-size: 0.85rem; font-weight: 500; color: var(--white);">CR Antes <span style="color: var(--muted); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin: 0 0.4rem;">2–2</span> GD Mealhada</div>
-    </div>
-    <div style="background: var(--bg); padding: 0.9rem 1.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 160px;">
-      <div style="font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase;">J20 · Mar 2026</div>
-      <div style="font-size: 0.85rem; font-weight: 500; color: var(--white);">CR Antes <span style="color: var(--red); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin: 0 0.4rem;">5–4</span> Mourisquense</div>
-    </div>
+    <div style="background: var(--bg); padding: 0.9rem 1.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 160px;"><div style="font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase;">J2 · Out 2025</div><div style="font-size: 0.85rem; font-weight: 500; color: var(--white);">Bustelo <span style="color: var(--red); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin: 0 0.4rem;">1–3</span> CR Antes</div></div>
+    <div style="background: var(--bg); padding: 0.9rem 1.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 160px;"><div style="font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase;">J7 · Nov 2025</div><div style="font-size: 0.85rem; font-weight: 500; color: var(--white);">Mourisquense <span style="color: var(--red); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin: 0 0.4rem;">0–2</span> CR Antes</div></div>
+    <div style="background: var(--bg); padding: 0.9rem 1.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 160px;"><div style="font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase;">J8 · Nov 2025</div><div style="font-size: 0.85rem; font-weight: 500; color: var(--white);">CR Antes <span style="color: var(--red); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin: 0 0.4rem;">4–1</span> Valecambrense</div></div>
+    <div style="background: var(--bg); padding: 0.9rem 1.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 160px;"><div style="font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase;">J10 · Dez 2025</div><div style="font-size: 0.85rem; font-weight: 500; color: var(--white);">CR Antes <span style="color: var(--muted); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin: 0 0.4rem;">3–3</span> Valonguense</div></div>
+    <div style="background: var(--bg); padding: 0.9rem 1.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 160px;"><div style="font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase;">J11 · Jan 2026</div><div style="font-size: 0.85rem; font-weight: 500; color: var(--white);">Beira-Mar B <span style="color: var(--muted); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin: 0 0.4rem;">2–1</span> CR Antes</div></div>
+    <div style="background: var(--bg); padding: 0.9rem 1.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 160px;"><div style="font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase;">J12 · Jan 2026</div><div style="font-size: 0.85rem; font-weight: 500; color: var(--white);">CR Antes <span style="color: var(--muted); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin: 0 0.4rem;">2–2</span> GD Mealhada</div></div>
+    <div style="background: var(--bg); padding: 0.9rem 1.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 160px;"><div style="font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase;">J20 · Mar 2026</div><div style="font-size: 0.85rem; font-weight: 500; color: var(--white);">CR Antes <span style="color: var(--red); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; margin: 0 0.4rem;">5–4</span> Mourisquense</div></div>
   </div>
 </div>
 
@@ -570,44 +332,58 @@
 
 <!-- SOBRE -->
 <section id="sobre">
-  <div class="section-label">Perfil</div>
+  <div class="section-label" data-pt>Perfil</div>
+  <div class="section-label" data-en>Profile</div>
   <div class="about-grid">
     <div class="about-text">
-      <h2 class="section-title">SOBRE<br>MIM</h2>
-      <p>Sou economista, mas o futebol sempre foi algo que quis levar a sério. Em 2025 tive a oportunidade de entrar para o staff do CR Antes como analista tático — e foi mesmo isso que fiz. Sem nada montado, parti do zero: estruturei a metodologia, defini os templates, observei os adversários e comecei a produzir relatórios jornada a jornada.</p>
-      <p>Tenho <strong>formação em Economia pelo ISEG</strong> e uma pós-graduação em Finanças e Fiscalidade pela Porto Business School. Trabalho atualmente na Sodexo na área de Controlling. O que estes dois mundos têm em comum é a mesma coisa: <strong>transformar dados e observação em decisões melhores</strong>.</p>
-      <p>Em abril de 2026 começa o curso de Scouting e Análise de Jogo da <strong>Liga Portugal Business School</strong> — o passo que faltava para formalizar e aprofundar este percurso, e para conhecer pessoas que trabalham nesta área a sério.</p>
+      <h2 class="section-title" data-pt>SOBRE<br>MIM</h2>
+      <h2 class="section-title" data-en>ABOUT<br>ME</h2>
+      <div data-pt>
+        <p>Sou economista, mas o futebol sempre foi algo que quis levar a sério. Em 2025 tive a oportunidade de entrar para o staff do CR Antes como analista tático — e foi mesmo isso que fiz. Sem nada montado, parti do zero: estruturei a metodologia, defini os templates, observei os adversários e comecei a produzir relatórios jornada a jornada.</p>
+        <p>Tenho <strong>formação em Economia pelo ISEG</strong> e uma pós-graduação em Finanças e Fiscalidade pela Porto Business School. Trabalho atualmente na Sodexo na área de Controlling. O que estes dois mundos têm em comum é a mesma coisa: <strong>transformar dados e observação em decisões melhores</strong>.</p>
+        <p>Em abril de 2026 começa o curso de Scouting e Análise de Jogo da <strong>Liga Portugal Business School</strong> — o passo que faltava para formalizar e aprofundar este percurso, e para conhecer pessoas que trabalham nesta área a sério.</p>
+      </div>
+      <div data-en>
+        <p>I'm an economist, but football has always been something I wanted to take seriously. In 2025 I had the opportunity to join CR Antes' staff as a tactical analyst — and that's exactly what I did. Starting from scratch, I built the methodology, defined the templates, scouted opponents and began producing reports week by week.</p>
+        <p>I hold a <strong>degree in Economics from ISEG</strong> and a postgraduate in Finance & Taxation from Porto Business School. I currently work at Sodexo in Controlling. What these two worlds have in common is simple: <strong>turning data and observation into better decisions</strong>.</p>
+        <p>In April 2026 the <strong>Liga Portugal Business School</strong> Scouting & Match Analysis course begins — the missing step to formalise and deepen this path, and to connect with people working seriously in this field.</p>
+      </div>
     </div>
     <div class="about-credentials">
       <div class="credential-card">
-        <div class="credential-title">Scouting e Análise de Jogo — Futebol Profissional</div>
-        <div class="credential-sub">Liga Portugal Business School · Em curso</div>
+        <div class="credential-title" data-pt>Scouting e Análise de Jogo — Futebol Profissional</div>
+        <div class="credential-title" data-en>Scouting & Match Analysis — Professional Football</div>
+        <div class="credential-sub">Liga Portugal Business School · <span data-pt>Em curso</span><span data-en>In progress</span></div>
         <div class="credential-year">Abr 2026 — Mai 2026</div>
       </div>
       <div class="credential-card">
-        <div class="credential-title">Analista Tático — Equipa Principal</div>
-        <div class="credential-sub">CR Antes · 1ª Divisão Distrital AFA Aveiro</div>
-        <div class="credential-year">Out 2025 — presente</div>
+        <div class="credential-title" data-pt>Analista Tático — Equipa Principal</div>
+        <div class="credential-title" data-en>Tactical Analyst — First Team</div>
+        <div class="credential-sub">CR Antes · 1ª <span data-pt>Divisão Distrital AFA Aveiro</span><span data-en>Division AFA Aveiro</span></div>
+        <div class="credential-year"><span data-pt>Out</span><span data-en>Oct</span> 2025 — <span data-pt>presente</span><span data-en>present</span></div>
       </div>
       <div class="credential-card">
         <div class="credential-title">Controlling & Accounting CS UK & ROI</div>
         <div class="credential-sub">Sodexo · Matosinhos</div>
-        <div class="credential-year">Mai 2025 — presente</div>
+        <div class="credential-year"><span data-pt>Mai</span><span data-en>May</span> 2025 — <span data-pt>presente</span><span data-en>present</span></div>
       </div>
       <div class="credential-card">
-        <div class="credential-title">Pós-Graduação em Finanças e Fiscalidade</div>
+        <div class="credential-title" data-pt>Pós-Graduação em Finanças e Fiscalidade</div>
+        <div class="credential-title" data-en>Postgraduate in Finance & Taxation</div>
         <div class="credential-sub">Porto Business School</div>
-        <div class="credential-year">Set 2024 — Jun 2025</div>
+        <div class="credential-year"><span data-pt>Set</span><span data-en>Sep</span> 2024 — <span data-pt>Jun</span><span data-en>Jun</span> 2025</div>
       </div>
       <div class="credential-card">
-        <div class="credential-title">Finance Manager</div>
+        <div class="credential-title" data-pt>Finance Manager</div>
+        <div class="credential-title" data-en>Finance Manager</div>
         <div class="credential-sub">Fobric Engineering · Mealhada</div>
-        <div class="credential-year">Abr 2023 — Mar 2025</div>
+        <div class="credential-year"><span data-pt>Abr</span><span data-en>Apr</span> 2023 — <span data-pt>Mar</span><span data-en>Mar</span> 2025</div>
       </div>
       <div class="credential-card">
-        <div class="credential-title">Licenciatura em Economia</div>
+        <div class="credential-title" data-pt>Licenciatura em Economia</div>
+        <div class="credential-title" data-en>Bachelor's in Economics</div>
         <div class="credential-sub">ISEG — Lisbon School of Economics & Management</div>
-        <div class="credential-year">Set 2019 — Set 2022</div>
+        <div class="credential-year"><span data-pt>Set</span><span data-en>Sep</span> 2019 — <span data-pt>Set</span><span data-en>Sep</span> 2022</div>
       </div>
     </div>
   </div>
@@ -615,40 +391,54 @@
 
 <div class="section-divider"></div>
 
-<!-- APPROACH -->
+<!-- ABORDAGEM -->
 <section class="approach-section">
-  <div class="section-label">Como trabalho</div>
-  <h2 class="section-title">ABORDAGEM</h2>
+  <div class="section-label" data-pt>Como trabalho</div>
+  <div class="section-label" data-en>How I work</div>
+  <h2 class="section-title" data-pt>ABORDAGEM</h2>
+  <h2 class="section-title" data-en>APPROACH</h2>
   <div class="approach-grid">
     <div class="approach-item">
       <div class="approach-num">01</div>
-      <div class="approach-name">Observação directa</div>
-      <div class="approach-desc">Presença nos jogos com registo em vídeo e anotações em tempo real. Cada adversário é observado em pelo menos um jogo — idealmente dois, incluindo a 2ª volta, para detetar evoluções e ajustes.</div>
+      <div class="approach-name" data-pt>Observação directa</div>
+      <div class="approach-name" data-en>Direct observation</div>
+      <div class="approach-desc" data-pt>Presença nos jogos com registo em vídeo e anotações em tempo real. Cada adversário é observado em pelo menos um jogo — idealmente dois, incluindo a 2ª volta, para detetar evoluções e ajustes.</div>
+      <div class="approach-desc" data-en>Attending matches with video recording and real-time notes. Each opponent is observed in at least one game — ideally two, including the second leg, to detect evolutions and adjustments.</div>
     </div>
     <div class="approach-item">
       <div class="approach-num">02</div>
-      <div class="approach-name">Estrutura fixa de relatório</div>
-      <div class="approach-desc">Todos os relatórios táticos seguem a mesma framework: sistema tático, construção, organização ofensiva, organização defensiva, bolas paradas, jogadores-chave e sugestões para o treinador.</div>
+      <div class="approach-name" data-pt>Estrutura fixa de relatório</div>
+      <div class="approach-name" data-en>Fixed report structure</div>
+      <div class="approach-desc" data-pt>Todos os relatórios táticos seguem a mesma framework: sistema tático, construção, organização ofensiva, organização defensiva, bolas paradas, jogadores-chave e sugestões para o treinador.</div>
+      <div class="approach-desc" data-en>All tactical reports follow the same framework: tactical system, build-up, offensive organisation, defensive organisation, set pieces, key players and suggestions for the coach.</div>
     </div>
     <div class="approach-item">
       <div class="approach-num">03</div>
-      <div class="approach-name">Bolas paradas sistematizadas</div>
-      <div class="approach-desc">Análise detalhada dos esquemas ofensivos e defensivos do adversário. Produção de documentos de bolas paradas do próprio CR Antes para afixar no balneário no dia de jogo.</div>
+      <div class="approach-name" data-pt>Bolas paradas sistematizadas</div>
+      <div class="approach-name" data-en>Set pieces systematised</div>
+      <div class="approach-desc" data-pt>Análise detalhada dos esquemas ofensivos e defensivos do adversário. Produção de documentos de bolas paradas do próprio CR Antes para afixar no balneário no dia de jogo.</div>
+      <div class="approach-desc" data-en>Detailed analysis of the opponent's offensive and defensive set piece routines. Production of CR Antes' own set piece documents to be displayed in the dressing room on match day.</div>
     </div>
     <div class="approach-item">
       <div class="approach-num">04</div>
-      <div class="approach-name">Análise individual</div>
-      <div class="approach-desc">Perfil por jogador: posição, pé dominante, características ofensivas e defensivas, comportamento nos duelos e referências de marcação quando relevante.</div>
+      <div class="approach-name" data-pt>Análise individual</div>
+      <div class="approach-name" data-en>Individual analysis</div>
+      <div class="approach-desc" data-pt>Perfil por jogador: posição, pé dominante, características ofensivas e defensivas, comportamento nos duelos e referências de marcação quando relevante.</div>
+      <div class="approach-desc" data-en>Player profile: position, dominant foot, offensive and defensive characteristics, duel behaviour and marking references when relevant.</div>
     </div>
     <div class="approach-item">
       <div class="approach-num">05</div>
-      <div class="approach-name">Presença no treino</div>
-      <div class="approach-desc">Acompanhamento dos treinos, apoio na aplicação prática do trabalho tático, correções na transição da análise para o campo e suporte ao treinador no planeamento semanal.</div>
+      <div class="approach-name" data-pt>Presença no treino</div>
+      <div class="approach-name" data-en>Training presence</div>
+      <div class="approach-desc" data-pt>Acompanhamento dos treinos, apoio na aplicação prática do trabalho tático, correções na transição da análise para o campo e suporte ao treinador no planeamento semanal.</div>
+      <div class="approach-desc" data-en>Following training sessions, supporting the practical application of tactical work, corrections in the transition from analysis to the pitch, and supporting the coach in weekly planning.</div>
     </div>
     <div class="approach-item">
       <div class="approach-num">06</div>
-      <div class="approach-name">Sugestões accionáveis</div>
-      <div class="approach-desc">Cada relatório termina com prós/contras e sugestões concretas e prioritárias para o treinador preparar o jogo.</div>
+      <div class="approach-name" data-pt>Sugestões accionáveis</div>
+      <div class="approach-name" data-en>Actionable suggestions</div>
+      <div class="approach-desc" data-pt>Cada relatório termina com prós/contras e sugestões concretas e prioritárias para o treinador preparar o jogo.</div>
+      <div class="approach-desc" data-en>Each report ends with pros/cons and concrete, prioritised suggestions for the coach to prepare the game.</div>
     </div>
   </div>
 </section>
@@ -657,55 +447,65 @@
 
 <!-- TRABALHO -->
 <section id="trabalho">
-  <div class="section-label">Época 2025/2026</div>
-  <h2 class="section-title">TRABALHO<br>REALIZADO</h2>
+  <div class="section-label" data-pt>Época 2025/2026</div>
+  <div class="section-label" data-en>Season 2025/2026</div>
+  <h2 class="section-title" data-pt>TRABALHO<br>REALIZADO</h2>
+  <h2 class="section-title" data-en>WORK<br>PRODUCED</h2>
 
   <div class="work-intro">
     <!-- EDITAR TEXTO AQUI -->
-    <p>Ao longo da época 2025/2026, desenvolvi uma estrutura completa de análise para o CR Antes — 13 adversários analisados com relatório tático e análise de bolas paradas, com atualizações na 2ª volta. Abaixo está uma seleção representativa do trabalho produzido.</p>
-    <p style="font-size:0.85rem; color: var(--muted); line-height:1.8; border-left: 1px solid var(--border); padding-left: 1rem; margin-top: 1rem;">Este trabalho foi feito sem acesso a plataformas profissionais de vídeo ou bases de dados avançadas. A fonte de dados disponível é o ZeroZero. A observação é feita presencialmente, jogo a jogo — o que obriga a um raciocínio mais contextual, a atenção ao detalhe e a uma maior capacidade de síntese em tempo real.</p>
+    <div>
+      <p data-pt>Ao longo da época 2025/2026, desenvolvi uma estrutura completa de análise para o CR Antes — 13 adversários analisados com relatório tático e análise de bolas paradas, com atualizações na 2ª volta. Abaixo está uma seleção representativa do trabalho produzido.</p>
+      <p data-en>Throughout the 2025/2026 season, I developed a complete analysis structure for CR Antes — 13 opponents analysed with tactical reports and set piece analysis, with updates in the second leg. Below is a representative selection of the work produced.</p>
+      <p style="font-size:0.85rem; color: var(--muted); line-height:1.8; border-left: 1px solid var(--border); padding-left: 1rem; margin-top: 1rem;" data-pt>Este trabalho foi feito sem acesso a plataformas profissionais de vídeo ou bases de dados avançadas. A fonte de dados disponível é o ZeroZero. A observação é feita presencialmente, jogo a jogo — o que obriga a um raciocínio mais contextual, a atenção ao detalhe e a uma maior capacidade de síntese em tempo real.</p>
+      <p style="font-size:0.85rem; color: var(--muted); line-height:1.8; border-left: 1px solid var(--border); padding-left: 1rem; margin-top: 1rem;" data-en>This work was done without access to professional video platforms or advanced databases. The available data source is ZeroZero. Observation is done in person, game by game — which demands more contextual reasoning, attention to detail and greater capacity for real-time synthesis.</p>
+    </div>
     <!-- FIM EDITAR TEXTO -->
     <div>
       <div class="club-badge">
         <div class="badge-icon">CRA</div>
         <div class="badge-info">
           <div class="badge-name">CR Antes — Mealhada</div>
-          <div class="badge-sub">1ª Divisão Distrital · AF Aveiro · Zona Sul · 7º lugar</div>
+          <div class="badge-sub">1ª <span data-pt>Divisão Distrital</span><span data-en>Division</span> · AF Aveiro · <span data-pt>Zona Sul · 7º lugar</span><span data-en>South Zone · 7th place</span></div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="reports-grid" style="grid-template-columns: repeat(2, 1fr);">
-
+  <div class="reports-grid">
     <!-- SC Beira-Mar B -->
     <div class="report-card">
       <div class="report-card-header">
-        <span class="report-type">Relatório Tático</span>
-        <span class="report-jornada">9ª Jornada · Dez 2025</span>
+        <span class="report-type" data-pt>Relatório Tático</span>
+        <span class="report-type" data-en>Tactical Report</span>
+        <span class="report-jornada">9ª <span data-pt>Jornada</span><span data-en>Round</span> · <span data-pt>Dez</span><span data-en>Dec</span> 2025</span>
       </div>
       <div class="report-team">SC Beira-Mar B</div>
       <div class="report-meta">
         <span class="report-tag">4-3-3 / 4-1-4-1</span>
-        <span class="report-tag">Posse</span>
-        <span class="report-tag">Adversário forte</span>
+        <span class="report-tag" data-pt>Posse</span><span class="report-tag" data-en>Possession</span>
+        <span class="report-tag" data-pt>Adversário forte</span><span class="report-tag" data-en>Strong opponent</span>
       </div>
       <div class="report-detail-grid">
         <div class="report-detail-row">
-          <span class="detail-label">Org. ofensiva</span>
-          <span class="detail-val">4-3-3. Médios interiores procuram bola entrelinhas. O nº10 comanda e temporiza — referência de marcação prioritária.</span>
+          <span class="detail-label" data-pt>Org. ofensiva</span><span class="detail-label" data-en>Off. org.</span>
+          <span class="detail-val" data-pt>4-3-3. Médios interiores procuram bola entrelinhas. O nº10 comanda e temporiza — referência de marcação prioritária.</span>
+          <span class="detail-val" data-en>4-3-3. Interior midfielders look for the ball between lines. The nº10 commands and tempos — priority marking reference.</span>
         </div>
         <div class="report-detail-row">
-          <span class="detail-label">Org. defensiva</span>
-          <span class="detail-val">4-1-4-1. Extremos baixam à linha dos médios. Pressão alta agressiva na reação à perda. Recuperam e reiniciam com calma.</span>
+          <span class="detail-label" data-pt>Org. defensiva</span><span class="detail-label" data-en>Def. org.</span>
+          <span class="detail-val" data-pt>4-1-4-1. Extremos baixam à linha dos médios. Pressão alta agressiva na reação à perda. Recuperam e reiniciam com calma.</span>
+          <span class="detail-val" data-en>4-1-4-1. Wingers drop to the midfield line. Aggressive high press on losing possession. Recover and restart calmly.</span>
         </div>
         <div class="report-detail-row">
-          <span class="detail-label">Opções de Construção</span>
-          <span class="detail-val">Saída a 4, passam a 2 com a projeção dos laterais. Jogo interior com ligação dos médios. Lateral direito com maior projeção.</span>
+          <span class="detail-label" data-pt>Opções de Construção</span><span class="detail-label" data-en>Build-up</span>
+          <span class="detail-val" data-pt>Saída a 4, passam a 2 com a projeção dos laterais. Jogo interior com ligação dos médios. Lateral direito com maior projeção.</span>
+          <span class="detail-val" data-en>Build-up in a 4, transitioning to 2 with fullback projection. Interior play with midfield connections. Right back with greater projection.</span>
         </div>
         <div class="report-detail-row">
-          <span class="detail-label">Bolas paradas</span>
-          <span class="detail-val">Arrasto para o falso curto, homem solto ao 2º poste. Cantos trabalhados com rotinas reconhecíveis.</span>
+          <span class="detail-label" data-pt>Bolas paradas</span><span class="detail-label" data-en>Set pieces</span>
+          <span class="detail-val" data-pt>Arrasto para o falso curto, homem solto ao 2º poste. Cantos trabalhados com rotinas reconhecíveis.</span>
+          <span class="detail-val" data-en>Drag to false short, free man at the far post. Worked corners with recognisable routines.</span>
         </div>
       </div>
     </div>
@@ -713,31 +513,36 @@
     <!-- Macinhatense -->
     <div class="report-card">
       <div class="report-card-header">
-        <span class="report-type">Relatório Tático · 2ª Volta</span>
-        <span class="report-jornada">17ª Jornada · Fev 2026</span>
+        <span class="report-type" data-pt>Relatório Tático · 2ª Volta</span>
+        <span class="report-type" data-en>Tactical Report · 2nd Leg</span>
+        <span class="report-jornada">17ª <span data-pt>Jornada</span><span data-en>Round</span> · <span data-pt>Fev</span><span data-en>Feb</span> 2026</span>
       </div>
       <div class="report-team">Macinhatense</div>
       <div class="report-meta">
         <span class="report-tag">4-3-3</span>
-        <span class="report-tag">Direto</span>
-        <span class="report-tag">Update 2ª volta</span>
+        <span class="report-tag" data-pt>Direto</span><span class="report-tag" data-en>Direct</span>
+        <span class="report-tag" data-pt>Update 2ª volta</span><span class="report-tag" data-en>2nd leg update</span>
       </div>
       <div class="report-detail-grid">
         <div class="report-detail-row">
-          <span class="detail-label">Org. ofensiva</span>
-          <span class="detail-val">4-3-3. Extremos abertos na largura com movimentos diagonais nas costas da defesa. Jogador chave no corredor esquerdo — desequilibra, pé esquerdo.</span>
+          <span class="detail-label" data-pt>Org. ofensiva</span><span class="detail-label" data-en>Off. org.</span>
+          <span class="detail-val" data-pt>4-3-3. Extremos abertos na largura com movimentos diagonais nas costas da defesa. Jogador chave no corredor esquerdo — desequilibra, pé esquerdo.</span>
+          <span class="detail-val" data-en>4-3-3. Wide wingers with diagonal runs behind the defence. Key player on the left channel — unbalances, left-footed.</span>
         </div>
         <div class="report-detail-row">
-          <span class="detail-label">Org. defensiva</span>
-          <span class="detail-val">Inversão do triângulo defensivo. Extremos fecham mais baixos e por dentro. Lateral esquerdo não dá profundidade.</span>
+          <span class="detail-label" data-pt>Org. defensiva</span><span class="detail-label" data-en>Def. org.</span>
+          <span class="detail-val" data-pt>Inversão do triângulo defensivo. Extremos fecham mais baixos e por dentro. Lateral esquerdo não dá profundidade.</span>
+          <span class="detail-val" data-en>Inverted defensive triangle. Wingers drop lower and inside. Left back offers no depth.</span>
         </div>
         <div class="report-detail-row">
-          <span class="detail-label">Opções de Construção</span>
-          <span class="detail-val">Saída a 2, preferencialmente pelo central esquerdo (nº2). Juntam demasiado no triângulo. Apostam nas diagonais dos extremos.</span>
+          <span class="detail-label" data-pt>Opções de Construção</span><span class="detail-label" data-en>Build-up</span>
+          <span class="detail-val" data-pt>Saída a 2, preferencialmente pelo central esquerdo (nº2). Juntam demasiado no triângulo. Apostam nas diagonais dos extremos.</span>
+          <span class="detail-val" data-en>Build-up in pairs, preferably through the left centre-back (nº2). They crowd the triangle. Rely on the wingers' diagonal runs.</span>
         </div>
         <div class="report-detail-row">
-          <span class="detail-label">Bolas paradas</span>
-          <span class="detail-val">Homem solto ao 2º poste nos livres. Cantos com movimentos para a zona do penalty e nº23 a arrancar de trás para o 2º poste.</span>
+          <span class="detail-label" data-pt>Bolas paradas</span><span class="detail-label" data-en>Set pieces</span>
+          <span class="detail-val" data-pt>Homem solto ao 2º poste nos livres. Cantos com movimentos para a zona do penalty e nº23 a arrancar de trás para o 2º poste.</span>
+          <span class="detail-val" data-en>Free man at the far post on free kicks. Corners with movements to the penalty spot and nº23 running from deep to the far post.</span>
         </div>
       </div>
     </div>
@@ -745,31 +550,36 @@
     <!-- GD Mealhada -->
     <div class="report-card">
       <div class="report-card-header">
-        <span class="report-type">Relatório Tático</span>
-        <span class="report-jornada">11ª Jornada · Jan 2026</span>
+        <span class="report-type" data-pt>Relatório Tático</span>
+        <span class="report-type" data-en>Tactical Report</span>
+        <span class="report-jornada">11ª <span data-pt>Jornada</span><span data-en>Round</span> · <span data-pt>Jan</span><span data-en>Jan</span> 2026</span>
       </div>
       <div class="report-team">GD Mealhada</div>
       <div class="report-meta">
         <span class="report-tag">4-3-3 / 4-4-2</span>
-        <span class="report-tag">Individual</span>
-        <span class="report-tag">Sem processos</span>
+        <span class="report-tag" data-pt>Individual</span><span class="report-tag" data-en>Individual quality</span>
+        <span class="report-tag" data-pt>Sem processos</span><span class="report-tag" data-en>No structure</span>
       </div>
       <div class="report-detail-grid">
         <div class="report-detail-row">
-          <span class="detail-label">Org. ofensiva</span>
-          <span class="detail-val">4-3-3. Médio centro ambidestro sempre nos momentos de decisão — o jogador a anular. Ligações interiores com os médios e o avançado.</span>
+          <span class="detail-label" data-pt>Org. ofensiva</span><span class="detail-label" data-en>Off. org.</span>
+          <span class="detail-val" data-pt>4-3-3. Médio centro ambidestro sempre nos momentos de decisão — o jogador a anular. Ligações interiores com os médios e o avançado.</span>
+          <span class="detail-val" data-en>4-3-3. Two-footed central midfielder always in decision moments — the player to nullify. Interior connections with midfielders and striker.</span>
         </div>
         <div class="report-detail-row">
-          <span class="detail-label">Org. defensiva</span>
-          <span class="detail-val">4-4-2 sem rotinas. Dois avançados na primeira linha. Dificuldades físicas criam muito espaço interior.</span>
+          <span class="detail-label" data-pt>Org. defensiva</span><span class="detail-label" data-en>Def. org.</span>
+          <span class="detail-val" data-pt>4-4-2 sem rotinas. Dois avançados na primeira linha. Dificuldades físicas criam muito espaço interior.</span>
+          <span class="detail-val" data-en>4-4-2 with no routines. Two forwards in the first line. Physical limitations create a lot of interior space.</span>
         </div>
         <div class="report-detail-row">
-          <span class="detail-label">Opções de Construção</span>
-          <span class="detail-val">Médio centro baixa à linha de 3 sobre a esquerda. Extremo vai dentro, laterais projetados. Saída 1ª fase a 4.</span>
+          <span class="detail-label" data-pt>Opções de Construção</span><span class="detail-label" data-en>Build-up</span>
+          <span class="detail-val" data-pt>Médio centro baixa à linha de 3 sobre a esquerda. Extremo vai dentro, laterais projetados. Saída 1ª fase a 4.</span>
+          <span class="detail-val" data-en>Central midfielder drops to a back 3 on the left. Winger moves inside, fullbacks project. First phase exits in a 4.</span>
         </div>
         <div class="report-detail-row">
-          <span class="detail-label">Bolas paradas</span>
-          <span class="detail-val">Médio centro muito forte nas definições — livres e cantos. Bola cortada ao 2º poste. Movimentação falsa para o curto e bola no 1º poste.</span>
+          <span class="detail-label" data-pt>Bolas paradas</span><span class="detail-label" data-en>Set pieces</span>
+          <span class="detail-val" data-pt>Médio centro muito forte nas definições — livres e cantos. Bola cortada ao 2º poste. Movimentação falsa para o curto e bola no 1º poste.</span>
+          <span class="detail-val" data-en>Central midfielder very strong on deliveries — free kicks and corners. Ball cut to the far post. False short movement with delivery to the near post.</span>
         </div>
       </div>
     </div>
@@ -777,62 +587,77 @@
     <!-- UD Mourisquense -->
     <div class="report-card">
       <div class="report-card-header">
-        <span class="report-type">Relatório Tático · 2ª Volta</span>
-        <span class="report-jornada">19ª Jornada · Mar 2026</span>
+        <span class="report-type" data-pt>Relatório Tático · 2ª Volta</span>
+        <span class="report-type" data-en>Tactical Report · 2nd Leg</span>
+        <span class="report-jornada">19ª <span data-pt>Jornada</span><span data-en>Round</span> · <span data-pt>Mar</span><span data-en>Mar</span> 2026</span>
       </div>
       <div class="report-team">UD Mourisquense</div>
       <div class="report-meta">
         <span class="report-tag">5-2-1-2</span>
         <span class="report-tag">Press-high</span>
-        <span class="report-tag">2º classificado</span>
+        <span class="report-tag">2º <span data-pt>classificado</span><span data-en>place</span></span>
       </div>
       <div class="report-detail-grid">
         <div class="report-detail-row">
-          <span class="detail-label">Org. ofensiva</span>
-          <span class="detail-val">5-2-1-2. Transição muito rápida — procuram o espaço e a profundidade. Laterais bastante projetados. Médio ofensivo descai pelo corredor esquerdo.</span>
+          <span class="detail-label" data-pt>Org. ofensiva</span><span class="detail-label" data-en>Off. org.</span>
+          <span class="detail-val" data-pt>5-2-1-2. Transição muito rápida — procuram o espaço e a profundidade. Laterais bastante projetados. Médio ofensivo descai pelo corredor esquerdo.</span>
+          <span class="detail-val" data-en>5-2-1-2. Very fast transition — seeking space and depth. Fullbacks highly projected. Attacking midfielder drifts to the left channel.</span>
         </div>
         <div class="report-detail-row">
-          <span class="detail-label">Org. defensiva</span>
-          <span class="detail-val">5-2-1-2 com linhas altas. Extremamente agressivos na reação à perda. Ganham muitos duelos. Um dos médios salta para anular.</span>
+          <span class="detail-label" data-pt>Org. defensiva</span><span class="detail-label" data-en>Def. org.</span>
+          <span class="detail-val" data-pt>5-2-1-2 com linhas altas. Extremamente agressivos na reação à perda. Ganham muitos duelos. Um dos médios salta para anular.</span>
+          <span class="detail-val" data-en>5-2-1-2 with high lines. Extremely aggressive on losing possession. Win many duels. One midfielder steps up to nullify.</span>
         </div>
         <div class="report-detail-row">
-          <span class="detail-label">Opções de Construção</span>
-          <span class="detail-val">Paciência na construção, circulam pelos corredores, incluem o GR. Procuram as referências ofensivas para ganhar metros e jogar de frente.</span>
+          <span class="detail-label" data-pt>Opções de Construção</span><span class="detail-label" data-en>Build-up</span>
+          <span class="detail-val" data-pt>Paciência na construção, circulam pelos corredores, incluem o GR. Procuram as referências ofensivas para ganhar metros e jogar de frente.</span>
+          <span class="detail-val" data-en>Patient build-up, circulating through the channels, including the goalkeeper. Look for offensive references to gain ground and play forward.</span>
         </div>
         <div class="report-detail-row">
-          <span class="detail-label">Bolas paradas</span>
-          <span class="detail-val">Cantos com concentração na área — movimentações desde o 2º poste com ataques específicos às zonas. Livres defensivos com linha compacta.</span>
+          <span class="detail-label" data-pt>Bolas paradas</span><span class="detail-label" data-en>Set pieces</span>
+          <span class="detail-val" data-pt>Cantos com concentração na área — movimentações desde o 2º poste com ataques específicos às zonas. Livres defensivos com linha compacta.</span>
+          <span class="detail-val" data-en>Corners with area concentration — movements from the far post with specific zone attacks. Defensive free kicks with a compact line.</span>
         </div>
       </div>
     </div>
-
   </div>
 
   <!-- Padrões táticos -->
-  <div class="section-label" style="margin-top:3rem; margin-bottom:1rem;">Padrões táticos identificados na divisão</div>
+  <div class="section-label" style="margin-top:3rem; margin-bottom:1rem;" data-pt>Padrões táticos identificados na divisão</div>
+  <div class="section-label" style="margin-top:3rem; margin-bottom:1rem;" data-en>Tactical patterns identified in the division</div>
   <div class="formation-showcase">
     <div class="formation-card">
       <div class="formation-card-header">
-        <span class="formation-club">SC Beira-Mar B — referência da divisão</span>
+        <span class="formation-club" data-pt>SC Beira-Mar B — referência da divisão</span>
+        <span class="formation-club" data-en>SC Beira-Mar B — division benchmark</span>
         <span class="formation-scheme">4-3-3</span>
       </div>
       <div class="formation-notes">
-        <div class="formation-note">Equipa com <strong>rotinas coletivas consolidadas</strong> — jogo de posse estruturado, movimentações com propósito e processos defensivos bem definidos.</div>
-        <div class="formation-note"><strong>Transição defensiva</strong> muito intensa — reagem rápido à perda, guardam a bola e reiniciam com calma. Jogam com processos, não com improviso.</div>
-        <div class="formation-note">Bolas paradas trabalhadas — arrasto para o falso curto, homem solto ao 2º poste. Esquemas com rotinas reconhecíveis ao longo da época.</div>
-        <div class="formation-note">Vulnerabilidade identificada: central esquerdo — forçar a construção por esse lado e fechar as linhas de ligação interiores.</div>
+        <div class="formation-note" data-pt>Equipa com <strong>rotinas coletivas consolidadas</strong> — jogo de posse estruturado, movimentações com propósito e processos defensivos bem definidos.</div>
+        <div class="formation-note" data-en>A team with <strong>consolidated collective routines</strong> — structured possession play, purposeful movements and well-defined defensive processes.</div>
+        <div class="formation-note" data-pt><strong>Transição defensiva</strong> muito intensa — reagem rápido à perda, guardam a bola e reiniciam com calma. Jogam com processos, não com improviso.</div>
+        <div class="formation-note" data-en><strong>Defensive transition</strong> very intense — quick reaction to loss, hold the ball and restart calmly. They play with processes, not improvisation.</div>
+        <div class="formation-note" data-pt>Bolas paradas trabalhadas — arrasto para o falso curto, homem solto ao 2º poste. Esquemas com rotinas reconhecíveis ao longo da época.</div>
+        <div class="formation-note" data-en>Worked set pieces — drag to false short, free man at far post. Routines recognisable throughout the season.</div>
+        <div class="formation-note" data-pt>Vulnerabilidade identificada: central esquerdo — forçar a construção por esse lado e fechar as linhas de ligação interiores.</div>
+        <div class="formation-note" data-en>Identified vulnerability: left centre-back — force build-up through that side and close interior connection lines.</div>
       </div>
     </div>
     <div class="formation-card">
       <div class="formation-card-header">
-        <span class="formation-club">Tendência geral da divisão</span>
+        <span class="formation-club" data-pt>Tendência geral da divisão</span>
+        <span class="formation-club" data-en>General division trend</span>
         <span class="formation-scheme">1ª Div. AFA</span>
       </div>
       <div class="formation-notes">
-        <div class="formation-note">A maioria das equipas assenta num futebol <strong>direto e físico</strong> — bola longa para a frente, aposta na profundidade e gestão da vantagem com posse conservadora.</div>
-        <div class="formation-note">Padrão recorrente em quase todos os adversários: <strong>central esquerdo como elo fraco na construção</strong> — limitado tecnicamente ou com dificuldades no pé dominante.</div>
-        <div class="formation-note">As bolas paradas são um foco de trabalho claro — a estrutura física das equipas torna o 5º momento do jogo um fator determinante nesta divisão.</div>
-        <div class="formation-note">Cucujães e Mourisquense destacam-se pelo <strong>press-high muito agressivo</strong> — linhas altas, intensidade na recuperação e jogo interior com qualidade acima da média da divisão.</div>
+        <div class="formation-note" data-pt>A maioria das equipas assenta num futebol <strong>direto e físico</strong> — bola longa para a frente, aposta na profundidade e gestão da vantagem com posse conservadora.</div>
+        <div class="formation-note" data-en>Most teams rely on <strong>direct and physical football</strong> — long ball forward, betting on depth and managing the lead with conservative possession.</div>
+        <div class="formation-note" data-pt>Padrão recorrente em quase todos os adversários: <strong>central esquerdo como elo fraco na construção</strong> — limitado tecnicamente ou com dificuldades no pé dominante.</div>
+        <div class="formation-note" data-en>Recurring pattern across almost all opponents: <strong>left centre-back as the weak link in build-up</strong> — technically limited or with difficulties on the dominant foot.</div>
+        <div class="formation-note" data-pt>As bolas paradas são um foco de trabalho claro — a estrutura física das equipas torna o 5º momento do jogo um fator determinante nesta divisão.</div>
+        <div class="formation-note" data-en>Set pieces are a clear work focus — the physical structure of teams makes the 5th moment of the game a determining factor in this division.</div>
+        <div class="formation-note" data-pt>Cucujães e Mourisquense destacam-se pelo <strong>press-high muito agressivo</strong> — linhas altas, intensidade na recuperação e jogo interior com qualidade acima da média da divisão.</div>
+        <div class="formation-note" data-en>Cucujães and Mourisquense stand out for their <strong>very aggressive high press</strong> — high lines, intensity in recovery and interior play above the division's average quality.</div>
       </div>
     </div>
   </div>
@@ -842,31 +667,22 @@
 
 <!-- BOLAS PARADAS -->
 <section style="background: var(--surface); padding: 6rem 3rem;">
-  <div class="section-label">Documentação operacional</div>
-  <h2 class="section-title">BOLAS PARADAS<br>DO CR ANTES</h2>
-
+  <div class="section-label" data-pt>Documentação operacional</div>
+  <div class="section-label" data-en>Operational documentation</div>
+  <h2 class="section-title" data-pt>BOLAS PARADAS<br>DO CR ANTES</h2>
+  <h2 class="section-title" data-en>CR ANTES<br>SET PIECES</h2>
   <div class="bp-grid">
     <div class="bp-intro">
-      <p>Para além da análise dos adversários, produzo a <strong>documentação de bolas paradas do próprio CR Antes</strong> — um documento entregue ao treinador e afixado no balneário no dia de cada jogo, com todos os esquemas ofensivos e defensivos e as posições nominais de cada jogador.</p>
-      <p>Os documentos são produzidos na plataforma TACTICALista e atualizados jornada a jornada. Cobrem cantos ofensivos com múltiplas variantes (incluindo soluções curto), cantos defensivos, livres ofensivos e livres defensivos.</p>
+      <p data-pt>Para além da análise dos adversários, produzo a <strong>documentação de bolas paradas do próprio CR Antes</strong> — um documento entregue ao treinador e afixado no balneário no dia de cada jogo, com todos os esquemas ofensivos e defensivos e as posições nominais de cada jogador.</p>
+      <p data-en>Beyond opponent analysis, I produce <strong>CR Antes' own set piece documentation</strong> — a document handed to the coach and displayed in the dressing room on match day, covering all offensive and defensive schemes with each player's nominal positions.</p>
+      <p data-pt>Os documentos são produzidos na plataforma TACTICALista e atualizados jornada a jornada. Cobrem cantos ofensivos com múltiplas variantes (incluindo soluções curto), cantos defensivos, livres ofensivos e livres defensivos.</p>
+      <p data-en>Documents are produced on the TACTICALista platform and updated round by round. They cover offensive corners with multiple variants (including short solutions), defensive corners, offensive free kicks and defensive free kicks.</p>
     </div>
     <div class="bp-types">
-      <div class="bp-type-row">
-        <span class="bp-type-name">Cantos Ofensivos</span>
-        <span class="bp-type-count">5+</span>
-      </div>
-      <div class="bp-type-row">
-        <span class="bp-type-name">Livres Ofensivos</span>
-        <span class="bp-type-count">3</span>
-      </div>
-      <div class="bp-type-row">
-        <span class="bp-type-name">Cantos Defensivos</span>
-        <span class="bp-type-count">1</span>
-      </div>
-      <div class="bp-type-row">
-        <span class="bp-type-name">Livres Defensivos</span>
-        <span class="bp-type-count">1</span>
-      </div>
+      <div class="bp-type-row"><span class="bp-type-name" data-pt>Cantos Ofensivos</span><span class="bp-type-name" data-en>Offensive Corners</span><span class="bp-type-count">5+</span></div>
+      <div class="bp-type-row"><span class="bp-type-name" data-pt>Livres Ofensivos</span><span class="bp-type-name" data-en>Offensive Free Kicks</span><span class="bp-type-count">3</span></div>
+      <div class="bp-type-row"><span class="bp-type-name" data-pt>Cantos Defensivos</span><span class="bp-type-name" data-en>Defensive Corners</span><span class="bp-type-count">1</span></div>
+      <div class="bp-type-row"><span class="bp-type-name" data-pt>Livres Defensivos</span><span class="bp-type-name" data-en>Defensive Free Kicks</span><span class="bp-type-count">1</span></div>
     </div>
   </div>
 </section>
@@ -875,42 +691,19 @@
 
 <!-- METODOLOGIA -->
 <section class="methodology-section" id="metodologia">
-  <div class="section-label">Framework de trabalho</div>
-  <h2 class="section-title">METODOLOGIA<br>DE ANÁLISE</h2>
-  <p style="max-width:600px; color: rgba(240,237,232,0.6); font-size: 0.95rem; line-height:1.9;">
-    Cada relatório tático segue uma estrutura fixa e reproduzível — garantindo consistência entre análises e facilitando a comparação ao longo da época.
-  </p>
+  <div class="section-label" data-pt>Framework de trabalho</div>
+  <div class="section-label" data-en>Work framework</div>
+  <h2 class="section-title" data-pt>METODOLOGIA<br>DE ANÁLISE</h2>
+  <h2 class="section-title" data-en>ANALYSIS<br>METHODOLOGY</h2>
+  <p style="max-width:600px; color: rgba(240,237,232,0.6); font-size: 0.95rem; line-height:1.9;" data-pt>Cada relatório tático segue uma estrutura fixa e reproduzível — garantindo consistência entre análises e facilitando a comparação ao longo da época.</p>
+  <p style="max-width:600px; color: rgba(240,237,232,0.6); font-size: 0.95rem; line-height:1.9;" data-en>Each tactical report follows a fixed, reproducible structure — ensuring consistency across analyses and facilitating comparison throughout the season.</p>
   <div class="method-steps">
-    <div class="method-step">
-      <div class="method-step-num">01</div>
-      <div class="method-step-title">Observação e registo</div>
-      <div class="method-step-desc">Presença no jogo com gravação de vídeo e notas em tempo real.</div>
-    </div>
-    <div class="method-step">
-      <div class="method-step-num">02</div>
-      <div class="method-step-title">Sistema + onze provável</div>
-      <div class="method-step-desc">Sistema tático, onze provável e jogos observados.</div>
-    </div>
-    <div class="method-step">
-      <div class="method-step-num">03</div>
-      <div class="method-step-title">Org. ofensiva e defensiva</div>
-      <div class="method-step-desc">Construção, transições e movimentos padrão com frames de vídeo.</div>
-    </div>
-    <div class="method-step">
-      <div class="method-step-num">04</div>
-      <div class="method-step-title">Bolas paradas</div>
-      <div class="method-step-desc">Cantos e livres OF e DEF — com frames e descrição das rotinas.</div>
-    </div>
-    <div class="method-step">
-      <div class="method-step-num">05</div>
-      <div class="method-step-title">Análise individual</div>
-      <div class="method-step-desc">Perfil de cada jogador: pé, posição, comportamento e ameaças.</div>
-    </div>
-    <div class="method-step">
-      <div class="method-step-num">06</div>
-      <div class="method-step-title">Sugestões</div>
-      <div class="method-step-desc">Prós/contras e sugestões concretas para o treinador, com instrução prioritária.</div>
-    </div>
+    <div class="method-step"><div class="method-step-num">01</div><div class="method-step-title" data-pt>Observação e registo</div><div class="method-step-title" data-en>Observation & recording</div><div class="method-step-desc" data-pt>Presença no jogo com gravação de vídeo e notas em tempo real.</div><div class="method-step-desc" data-en>Match attendance with video recording and real-time notes.</div></div>
+    <div class="method-step"><div class="method-step-num">02</div><div class="method-step-title" data-pt>Sistema + onze provável</div><div class="method-step-title" data-en>System + probable XI</div><div class="method-step-desc" data-pt>Sistema tático, onze provável e jogos observados.</div><div class="method-step-desc" data-en>Tactical system, probable XI and games observed.</div></div>
+    <div class="method-step"><div class="method-step-num">03</div><div class="method-step-title" data-pt>Org. ofensiva e defensiva</div><div class="method-step-title" data-en>Off. & def. organisation</div><div class="method-step-desc" data-pt>Construção, transições e movimentos padrão com frames de vídeo.</div><div class="method-step-desc" data-en>Build-up, transitions and pattern movements with video frames.</div></div>
+    <div class="method-step"><div class="method-step-num">04</div><div class="method-step-title" data-pt>Bolas paradas</div><div class="method-step-title" data-en>Set pieces</div><div class="method-step-desc" data-pt>Cantos e livres OF e DEF — com frames e descrição das rotinas.</div><div class="method-step-desc" data-en>OF and DEF corners and free kicks — with frames and routine descriptions.</div></div>
+    <div class="method-step"><div class="method-step-num">05</div><div class="method-step-title" data-pt>Análise individual</div><div class="method-step-title" data-en>Individual analysis</div><div class="method-step-desc" data-pt>Perfil de cada jogador: pé, posição, comportamento e ameaças.</div><div class="method-step-desc" data-en>Player profile: foot, position, behaviour and threats.</div></div>
+    <div class="method-step"><div class="method-step-num">06</div><div class="method-step-title" data-pt>Sugestões</div><div class="method-step-title" data-en>Suggestions</div><div class="method-step-desc" data-pt>Prós/contras e sugestões concretas para o treinador, com instrução prioritária.</div><div class="method-step-desc" data-en>Pros/cons and concrete suggestions for the coach, with a priority instruction.</div></div>
   </div>
 </section>
 
@@ -918,28 +711,38 @@
 
 <!-- OBJETIVOS -->
 <section id="objetivos">
-  <div class="section-label">Próximos passos</div>
-  <h2 class="section-title">OBJETIVOS<br>PROFISSIONAIS</h2>
+  <div class="section-label" data-pt>Próximos passos</div>
+  <div class="section-label" data-en>Next steps</div>
+  <h2 class="section-title" data-pt>OBJETIVOS<br>PROFISSIONAIS</h2>
+  <h2 class="section-title" data-en>PROFESSIONAL<br>GOALS</h2>
   <div class="objectives-grid">
     <div class="objective-item">
       <div class="objective-icon">LPBS</div>
-      <div class="objective-title">Certificação Liga Portugal</div>
-      <div class="objective-desc">O curso da Liga Portugal Business School começa a 8 de abril. São 35 horas em análise tática, ferramentas como Longomatch e BION, Big Data no futebol e estruturação de relatórios. É o primeiro passo formal neste percurso — e quero tirar o máximo partido dele.</div>
+      <div class="objective-title" data-pt>Certificação Liga Portugal</div>
+      <div class="objective-title" data-en>Liga Portugal Certification</div>
+      <div class="objective-desc" data-pt>O curso da Liga Portugal Business School começa a 8 de abril. São 35 horas em análise tática, ferramentas como Longomatch e BION, Big Data no futebol e estruturação de relatórios. É o primeiro passo formal neste percurso — e quero tirar o máximo partido dele.</div>
+      <div class="objective-desc" data-en>The Liga Portugal Business School course starts on April 8th. 35 hours covering tactical analysis, tools like Longomatch and BION, Big Data in football and report structuring. It's the first formal step in this journey — and I intend to make the most of it.</div>
     </div>
     <div class="objective-item">
       <div class="objective-icon">SCT</div>
-      <div class="objective-title">Desenvolvimento em scouting</div>
-      <div class="objective-desc">A análise coletiva é onde me sinto mais confortável. O scouting individual — avaliar jogadores com critério, com contexto e com clareza — é a área onde quero crescer mais. É o que falta para trabalhar nesta área de forma completa.</div>
+      <div class="objective-title" data-pt>Desenvolvimento em scouting</div>
+      <div class="objective-title" data-en>Scouting development</div>
+      <div class="objective-desc" data-pt>A análise coletiva é onde me sinto mais confortável. O scouting individual — avaliar jogadores com critério, com contexto e com clareza — é a área onde quero crescer mais. É o que falta para trabalhar nesta área de forma completa.</div>
+      <div class="objective-desc" data-en>Collective analysis is where I feel most comfortable. Individual scouting — evaluating players with criteria, context and clarity — is the area where I want to grow most. It's what's missing to work in this field fully.</div>
     </div>
     <div class="objective-item">
       <div class="objective-icon">NET</div>
-      <div class="objective-title">Construção de rede</div>
-      <div class="objective-desc">Até aqui trabalhei sozinho, num clube distrital, sem referências próximas nesta área. O curso é a primeira oportunidade real de me cruzar com pessoas que trabalham no futebol profissional. Este portfólio existe, em parte, para isso.</div>
+      <div class="objective-title" data-pt>Construção de rede</div>
+      <div class="objective-title" data-en>Network building</div>
+      <div class="objective-desc" data-pt>Até aqui trabalhei sozinho, num clube distrital, sem referências próximas nesta área. O curso é a primeira oportunidade real de me cruzar com pessoas que trabalham no futebol profissional. Este portfólio existe, em parte, para isso.</div>
+      <div class="objective-desc" data-en>Until now I've worked alone, at a district club, without close references in this field. The course is the first real opportunity to meet people working in professional football. This portfolio exists, in part, for exactly that.</div>
     </div>
     <div class="objective-item">
       <div class="objective-icon">DATA</div>
-      <div class="objective-title">Análise com dados</div>
-      <div class="objective-desc">Tenho formação em economia e trabalho com dados financeiros no dia-a-dia. Quero aplicar esse raciocínio ao futebol — juntar a observação qualitativa que já faço com dados estruturados. O módulo de Big Data do curso é o ponto de partida.</div>
+      <div class="objective-title" data-pt>Análise com dados</div>
+      <div class="objective-title" data-en>Data-driven analysis</div>
+      <div class="objective-desc" data-pt>Tenho formação em economia e trabalho com dados financeiros no dia-a-dia. Quero aplicar esse raciocínio ao futebol — juntar a observação qualitativa que já faço com dados estruturados. O módulo de Big Data do curso é o ponto de partida.</div>
+      <div class="objective-desc" data-en>I have an economics background and work with financial data daily. I want to apply that reasoning to football — combining the qualitative observation I already do with structured data. The course's Big Data module is the starting point.</div>
     </div>
   </div>
 </section>
@@ -949,49 +752,50 @@
 <!-- CONTACT -->
 <div class="contact-section" id="contacto">
   <div>
-    <div class="section-label">Contacto</div>
-    <h2 class="section-title">VAMOS<br>FALAR</h2>
-    <p class="contact-text">Disponível para trocar ideias sobre análise de jogo, scouting ou qualquer oportunidade de colaboração no futebol português.</p>
+    <div class="section-label" data-pt>Contacto</div>
+    <div class="section-label" data-en>Contact</div>
+    <h2 class="section-title" data-pt>VAMOS<br>FALAR</h2>
+    <h2 class="section-title" data-en>LET'S<br>TALK</h2>
+    <p class="contact-text" data-pt>Disponível para trocar ideias sobre análise de jogo, scouting ou qualquer oportunidade de colaboração no futebol português.</p>
+    <p class="contact-text" data-en>Available to exchange ideas about match analysis, scouting or any collaboration opportunity in Portuguese football.</p>
   </div>
   <div class="contact-links">
     <a href="mailto:bernardoalmeida9185@gmail.com" class="contact-link">
-      <div>
-        <div class="contact-link-label">Email</div>
-        <div class="contact-link-value">bernardoalmeida9185@gmail.com</div>
-      </div>
+      <div><div class="contact-link-label">Email</div><div class="contact-link-value">bernardoalmeida9185@gmail.com</div></div>
       <span class="contact-link-arrow">↗</span>
     </a>
     <a href="https://www.linkedin.com/in/bernardocalmeida" target="_blank" class="contact-link">
-      <div>
-        <div class="contact-link-label">LinkedIn</div>
-        <div class="contact-link-value">linkedin.com/in/bernardocalmeida</div>
-      </div>
+      <div><div class="contact-link-label">LinkedIn</div><div class="contact-link-value">linkedin.com/in/bernardocalmeida</div></div>
       <span class="contact-link-arrow">↗</span>
     </a>
     <div class="contact-link" style="cursor:default;">
-      <div>
-        <div class="contact-link-label">Localização</div>
-        <div class="contact-link-value">Mealhada, Aveiro · Portugal</div>
-      </div>
+      <div><div class="contact-link-label" data-pt>Localização</div><div class="contact-link-label" data-en>Location</div><div class="contact-link-value">Mealhada, Aveiro · Portugal</div></div>
     </div>
   </div>
 </div>
 
 <footer>
-  <div class="footer-logo">B. ALMEIDA · ANÁLISE DE JOGO</div>
-  <div class="footer-copy">Época 2025/2026 · CR Antes · AFA Aveiro</div>
+  <div class="footer-logo">B. ALMEIDA · <span data-pt>ANÁLISE DE JOGO</span><span data-en>MATCH ANALYSIS</span></div>
+  <div class="footer-copy" data-pt>Época 2025/2026 · CR Antes · AFA Aveiro</div>
+  <div class="footer-copy" data-en>Season 2025/2026 · CR Antes · AFA Aveiro</div>
 </footer>
 
-<!-- Photo injection script: replace placeholder with actual photo if available -->
 <script>
-  const img = document.querySelector('.hero-photo-wrap img');
-  if (img) {
-    img.onerror = function() {
-      this.style.display = 'none';
-      this.parentElement.style.background = 'linear-gradient(160deg, #2a0e0a 0%, #1a0806 40%, #0d0d0d 100%)';
-    };
+  let isEn = false;
+
+  function toggleLang() {
+    isEn = !isEn;
+    document.body.classList.toggle('lang-en', isEn);
+    const btns = document.querySelectorAll('#lang-toggle, .mobile-lang .lang-btn');
+    btns.forEach(btn => btn.textContent = isEn ? '🇵🇹 PT' : '🇬🇧 EN');
+  }
+
+  function toggleMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const ham = document.getElementById('hamburger');
+    menu.classList.toggle('open');
+    ham.classList.toggle('open');
   }
 </script>
-
 </body>
 </html>
