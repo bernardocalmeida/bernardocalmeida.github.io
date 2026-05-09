@@ -50,12 +50,13 @@
   .page-title span { color: var(--red); }
   .page-desc { max-width: 560px; font-size: 1rem; color: var(--muted); line-height: 1.8; border-left: 1px solid var(--border-red); padding-left: 1.5rem; }
 
-  /* ANALYSIS GRID */
-  .analysis-section { padding: 5rem 3rem; }
+  /* SECÇÕES */
+  .analysis-section { padding: 5rem 3rem 2rem; }
+  .cr-antes-section { padding: 3rem 3rem 5rem; }
   .section-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.25em; color: var(--red); text-transform: uppercase; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem; }
   .section-label::before { content: ''; display: inline-block; width: 1.5rem; height: 1px; background: var(--red); }
 
-  /* ===== ANALYSIS CARD ===== */
+  /* CARD LINKEDIN */
   .analysis-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
   .analysis-card { background: var(--bg); transition: background 0.2s; display: flex; flex-direction: column; }
   .analysis-card:hover { background: var(--surface); }
@@ -65,25 +66,55 @@
   .analysis-date { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.1em; }
   .analysis-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
   .analysis-tag { font-size: 0.65rem; color: var(--muted); border: 1px solid var(--border); padding: 0.15rem 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; }
-
   .analysis-card-body { padding: 1.5rem 2rem 1rem; flex: 1; }
   .analysis-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--white); line-height: 1.1; margin-bottom: 1rem; letter-spacing: 0.02em; }
   .analysis-summary { font-size: 0.88rem; color: var(--muted); line-height: 1.75; }
   .analysis-summary strong { color: rgba(240,237,232,0.8); font-weight: 500; }
-
   .analysis-points { margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
   .analysis-point { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
   .analysis-point::before { content: '—'; color: var(--red); flex-shrink: 0; margin-top: 0.05rem; }
-
   .analysis-card-footer { padding: 1.25rem 2rem 1.5rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
   .analysis-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); text-decoration: none; border: 1px solid var(--border-red); padding: 0.5rem 1rem; transition: all 0.2s; }
   .analysis-link:hover { background: var(--red-dim); }
   .analysis-platform { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.1em; }
 
-  /* ADD NEW CARD */
-  .analysis-card-add { background: var(--bg); border: 1px dashed rgba(240,237,232,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 3rem 2rem; min-height: 300px; cursor: default; }
-  .add-icon { width: 3rem; height: 3rem; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 1.5rem; }
-  .add-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase; text-align: center; }
+  /* ===== PAINEL CR ANTES ===== */
+  .cr-antes-panel { border: 1px solid var(--border); background: var(--surface); }
+
+  .cr-antes-panel-header {
+    padding: 2rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .cr-antes-panel-header-left { display: flex; flex-direction: column; gap: 0.4rem; }
+  .cr-antes-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--red); letter-spacing: 0.25em; text-transform: uppercase; }
+  .cr-antes-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.04em; color: var(--white); line-height: 1; margin-top: 0.25rem; }
+  .cr-antes-subtitle { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; margin-top: 0.2rem; }
+  .cr-antes-panel-header-right { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: flex-start; justify-content: flex-end; padding-top: 0.25rem; }
+
+  /* LISTA DE PDFs */
+  .pdf-list { display: flex; flex-direction: column; }
+  .pdf-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 1.5rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+  .pdf-row:last-child { border-bottom: none; }
+  .pdf-row:hover { background: var(--surface2); }
+  .pdf-row-left { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; }
+  .pdf-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--red); letter-spacing: 0.2em; text-transform: uppercase; }
+  .pdf-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; color: var(--white); letter-spacing: 0.03em; line-height: 1.1; }
+  .pdf-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; max-width: 520px; margin-top: 0.2rem; }
+  .pdf-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); text-decoration: none; border: 1px solid var(--border-red); padding: 0.5rem 1rem; white-space: nowrap; transition: all 0.2s; flex-shrink: 0; }
+  .pdf-link:hover { background: var(--red-dim); }
 
   /* LANGUAGE */
   [data-en] { display: none; }
@@ -101,8 +132,12 @@
     .nav-right { display: none; }
     .hamburger { display: flex; }
     .page-header { padding: 7rem 1.5rem 3rem; }
-    .analysis-section { padding: 3rem 1.5rem; }
+    .analysis-section { padding: 3rem 1.5rem 2rem; }
+    .cr-antes-section { padding: 2rem 1.5rem 4rem; }
     .analysis-grid { grid-template-columns: 1fr; }
+    .cr-antes-panel-header { flex-direction: column; padding: 1.5rem; }
+    .cr-antes-panel-header-right { justify-content: flex-start; }
+    .pdf-row { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1.25rem 1.5rem; }
     footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 2rem 1.5rem; }
   }
 </style>
@@ -142,23 +177,18 @@
   <p class="page-desc" data-en>Tactical analyses published outside the CR Antes context — observations on professional teams, game patterns and tactical trends in modern football.</p>
 </div>
 
-<!-- ANALYSIS SECTION -->
+<!-- PUBLICAÇÕES LINKEDIN -->
 <div class="analysis-section">
   <div class="section-label" data-pt>Publicações</div>
   <div class="section-label" data-en>Publications</div>
-
   <div class="analysis-grid">
 
-    <!-- ===== ADICIONAR NOVA ANÁLISE AQUI EM CIMA ===== -->
-    <!-- Copia o bloco abaixo e cola antes deste comentário -->
-
-    <!-- ANÁLISE 1: Sporting CP vs Bodø/Glimt -->
     <div class="analysis-card">
       <div class="analysis-card-header">
         <div class="analysis-meta">
           <div class="analysis-type" data-pt>Análise de Jogo</div>
           <div class="analysis-type" data-en>Match Analysis</div>
-          <div class="analysis-date">LinkedIn · 2026</div>
+          <div class="analysis-date">LinkedIn · 2025</div>
         </div>
         <div class="analysis-tags">
           <span class="analysis-tag">Champions League</span>
@@ -166,15 +196,6 @@
           <span class="analysis-tag">Press-high</span>
         </div>
       </div>
-
-       <!-- MEDIA -->
-  <div class="analysis-media">
-    <video controls playsinline>
-      <source src="https://i.imgur.com/yx3Smxh.mp4" type="video/mp4">
-      O teu navegador não suporta vídeo HTML5.
-    </video>
-  </div>
-      
       <div class="analysis-card-body">
         <div class="analysis-title" data-pt>Como o Bodø/Glimt desorganizou a construção do Sporting CP</div>
         <div class="analysis-title" data-en>How Bodø/Glimt disrupted Sporting CP's build-up</div>
@@ -195,15 +216,77 @@
         <span class="analysis-platform">#FootballAnalysis #TacticalAnalysis</span>
       </div>
     </div>
-    <!-- FIM ANÁLISE 1 -->
 
-    <!-- PLACEHOLDER: próxima análise -->
-    <div class="analysis-card-add">
-      <div class="add-icon">+</div>
-      <div class="add-label" data-pt>Próxima análise<br>em breve</div>
-      <div class="add-label" data-en>Next analysis<br>coming soon</div>
+  </div>
+</div>
+
+<!-- PAINEL CR ANTES -->
+<div class="cr-antes-section">
+  <div class="section-label" data-pt>Relatórios — CR Antes</div>
+  <div class="section-label" data-en>Reports — CR Antes</div>
+
+  <div class="cr-antes-panel">
+
+    <div class="cr-antes-panel-header">
+      <div class="cr-antes-panel-header-left">
+        <div class="cr-antes-eyebrow" data-pt>AFA I Divisão Zona Sul · 2025/26</div>
+        <div class="cr-antes-eyebrow" data-en>AFA I Division South Zone · 2025/26</div>
+        <div class="cr-antes-title">GD MEALHADA</div>
+        <div class="cr-antes-subtitle" data-pt>Jornada 25 · Posição 13º · Forma: D/V/V/D/D/E</div>
+        <div class="cr-antes-subtitle" data-en>Matchday 25 · Position 13th · Form: L/W/W/L/L/D</div>
+      </div>
+      <div class="cr-antes-panel-header-right">
+        <span class="analysis-tag">4-3-3</span>
+        <span class="analysis-tag">Futebol Direto</span>
+        <span class="analysis-tag">Pressão Baixa</span>
+      </div>
     </div>
 
+    <div class="pdf-list">
+
+      <!-- PDF 1 — Relatório Tático -->
+      <div class="pdf-row">
+        <div class="pdf-row-left">
+          <span class="pdf-label" data-pt>Relatório Tático</span>
+          <span class="pdf-label" data-en>Tactical Report</span>
+          <div class="pdf-name" data-pt>Organização Tática — GD Mealhada</div>
+          <div class="pdf-name" data-en>Tactical Organisation — GD Mealhada</div>
+          <p class="pdf-desc" data-pt>Análise da organização ofensiva e defensiva, padrões de construção, transições e situações identificadas a explorar no jogo.</p>
+          <p class="pdf-desc" data-en>Analysis of offensive and defensive organisation, build-up patterns, transitions and identified situations to exploit in the match.</p>
+        </div>
+        <a href="pdfs/RELAT%C3%93RIO%20T%C3%81TICO%20-%20GD%20Mealhada.pdf" target="_blank" class="pdf-link" data-pt>Ver PDF ↗</a>
+        <a href="pdfs/RELAT%C3%93RIO%20T%C3%81TICO%20-%20GD%20Mealhada.pdf" target="_blank" class="pdf-link" data-en>View PDF ↗</a>
+      </div>
+
+      <!-- PDF 2 — Bolas Paradas -->
+      <div class="pdf-row">
+        <div class="pdf-row-left">
+          <span class="pdf-label" data-pt>Relatório Bolas Paradas</span>
+          <span class="pdf-label" data-en>Set Piece Report</span>
+          <div class="pdf-name" data-pt>Bolas Paradas — GD Mealhada</div>
+          <div class="pdf-name" data-en>Set Pieces — GD Mealhada</div>
+          <p class="pdf-desc" data-pt>Mapeamento dos cantos ofensivos e defensivos, livres diretos e indiretos — rotinas, posicionamentos e pontos de exploração.</p>
+          <p class="pdf-desc" data-en>Mapping of offensive and defensive corners, direct and indirect free kicks — routines, positioning and exploitation opportunities.</p>
+        </div>
+        <a href="pdfs/RELAT%C3%93RIO%20BOLAS%20PARADAS%20-%20GD%20Mealhada.pdf" target="_blank" class="pdf-link" data-pt>Ver PDF ↗</a>
+        <a href="pdfs/RELAT%C3%93RIO%20BOLAS%20PARADAS%20-%20GD%20Mealhada.pdf" target="_blank" class="pdf-link" data-en>View PDF ↗</a>
+      </div>
+
+      <!-- PDF 3 — Individual -->
+      <div class="pdf-row">
+        <div class="pdf-row-left">
+          <span class="pdf-label" data-pt>Relatório Individual</span>
+          <span class="pdf-label" data-en>Individual Report</span>
+          <div class="pdf-name" data-pt>Análise Individual — GD Mealhada</div>
+          <div class="pdf-name" data-en>Individual Analysis — GD Mealhada</div>
+          <p class="pdf-desc" data-pt>Player cards dos 11 jogadores habituais — perfil físico, estatísticas da época, pontos fortes, pontos fracos e notas de contexto para a preparação do jogo.</p>
+          <p class="pdf-desc" data-en>Player cards for the regular 11 — physical profile, season statistics, strengths, weaknesses and contextual match preparation notes.</p>
+        </div>
+        <a href="pdfs/RELAT%C3%93RIO%20INDIVIDUAL%20-%20GD%20Mealhada.pdf" target="_blank" class="pdf-link" data-pt>Ver PDF ↗</a>
+        <a href="pdfs/RELAT%C3%93RIO%20INDIVIDUAL%20-%20GD%20Mealhada.pdf" target="_blank" class="pdf-link" data-en>View PDF ↗</a>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -215,14 +298,12 @@
 
 <script>
   let isEn = false;
-
   function toggleLang() {
     isEn = !isEn;
     document.body.classList.toggle('lang-en', isEn);
     const btns = document.querySelectorAll('#lang-toggle, .mobile-menu .lang-btn');
     btns.forEach(btn => btn.textContent = isEn ? '🇵🇹 PT' : '🇬🇧 EN');
   }
-
   function toggleMenu() {
     document.getElementById('mobile-menu').classList.toggle('open');
     document.getElementById('hamburger').classList.toggle('open');
@@ -230,3 +311,4 @@
 </script>
 </body>
 </html>
+
